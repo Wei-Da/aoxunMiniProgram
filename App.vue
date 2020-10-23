@@ -14,5 +14,5 @@
 
 <style>
 	/*每个页面公共css */
-	@import './common/iconfont.css';
+	@import './common/css/iconfont.css';
 </style>

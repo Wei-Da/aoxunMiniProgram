@@ -5,8 +5,14 @@
 			<text class="title">派单易</text>
 		</view>
 		<form @submit="formSubmit">
-			<icon type="personal" size="26"/>
-			<input class="input" name="input" placeholder="这是一个输入框" maxlength="-1" />
+			<view class="form-item">				
+				<view class="iconfont icon-user form-item-img"></view>
+				<input class="input" name="input" placeholder="请输入用户名" maxlength="-1" />
+			</view>
+			<view class="form-item">				
+				<view class="iconfont icon-user form-item-img"></view>
+				<input class="input" name="input" placeholder="请输入密码" maxlength="-1" />
+			</view>
 		</form>
 	</view>
 </template>
@@ -37,8 +43,20 @@
 				margin-left: 10rpx;
 			}
 		}
-		.input {
-			
+		.form-item {
+			display: flex;
+			align-items: center;
+			width: 80%;
+			height: 80rpx;
+			margin: 20rpx 60rpx;
+			.form-item-img {
+				font-size: 50rpx;
+			}
+			.input {
+				width: 100%;
+				height: 100%;
+				margin-left: 10rpx;
+			}
 		}
 	}
 </style>
