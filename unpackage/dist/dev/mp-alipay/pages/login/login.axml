@@ -1,0 +1,1 @@
+<view class="content"><view class="logo"><image class="img" src="../../static/images/logo.png" mode="aspectFit"></image><text class="title">派单易</text></view><form data-event-opts="{{[['submit',[['formSubmit',['$event']]]]]}}" onSubmit="__e"><icon type="personal" size="26"></icon><input class="input" name="input" placeholder="这是一个输入框" maxlength="-1"/></form></view>

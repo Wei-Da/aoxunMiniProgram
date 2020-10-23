@@ -1,0 +1,87 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "派单易",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/work/work",
+			"style": {
+				"navigationBarTitleText": "派单易",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/notice/notice",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/deviceListActivity/deviceListActivity",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/chart/chart",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "派单易",
+		"navigationBarBackgroundColor": "#49b2f2",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#888",
+		"selectedColor": "#85cea6",
+		"borderStyle": "white",
+		"backgroundColor": "#f6f6f6",
+		"list": [{
+				"pagePath": "pages/notice/notice",
+				"iconPath": "static/images/notice_unselect.png",
+				"selectedIconPath": "static/images/notice_select.png",
+				"text": "公告"
+			},
+			{
+				"pagePath": "pages/deviceListActivity/deviceListActivity",
+				"iconPath": "static/images/scanner_unselect.png",
+				"selectedIconPath": "static/images/scanner_select.png",
+				"text": "设备扫描"
+			},
+			{
+				"pagePath": "pages/work/work",
+				"iconPath": "static/images/unselect_main_page.png",
+				"selectedIconPath": "static/images/select_main_page.png",
+				"text": "工作"
+			},
+			{
+				"pagePath": "pages/chart/chart",
+				"iconPath": "static/images/unselect_disdata.png",
+				"selectedIconPath": "static/images/select_disdata.png",
+				"text": "报表"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"iconPath": "static/images/select_setting.png",
+				"selectedIconPath": "static/images/unselect_setting.png",
+				"text": "我的"
+			}
+		]
+	}
+}
