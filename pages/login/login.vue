@@ -18,11 +18,15 @@
 </template>
 
 <script>
+	import { androidLogin } from '@/apis/index.js';
 	export default {
 		data() {
 			return {
 				
 			};
+		},
+		onLoad() {
+			androidLogin()
 		}
 	}
 </script>
