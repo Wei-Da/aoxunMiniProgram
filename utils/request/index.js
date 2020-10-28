@@ -1,43 +1,75 @@
+import store from '../../store/index.js'
+
+const websiteUrl = 'https://www.njbhhelp.com/'
+
+
 const request = (param) => {
-	var url = param.url;
-	var method = param.method;
-	var header = param.header || {};
-	var data = param.data || {};
-	
+	let url = param.url;
+	let method = param.method || 'GET';
+	let header = param.header || {};
+	let data = param.data || {};
+	// 参数 serial(公司编号) 每次请求都要传参
+
+	data["routerCompany"] = uni.getStorageSync('serial') || '';
+	data["sessionId"] = uni.getStorageSync('sessionId') || '';
+
+	//防止重复提交，相同请求间隔时间不能小于500毫秒
+	let nowTime = new Date().getTime();
+
 	// 请求方式: GET POST 
-	if(method){
+	if (method) {
 		method = method.toUpperCase(); // 小写转成大写
-		if(method == "POST"){
-			header = {"content-type":"application/x-www-form-urlencoded"}
+		if (method === "POST") {
+			header = {
+				"content-type": "application/x-www-form-urlencoded;charset=utf-8"
+			}
+		} else {
+			header = {
+				"content-type": "application/json"
+			}
 		}
 	}
-	
+
 	// 发起请求 加载动画
-	if(!param.hideLoading){
-		uni.showLoading({title:"加载中..."})
+	if (!param.hideLoading) {
+		uni.showLoading({
+			title: "加载中..."
+		})
 	}
-	
+
 	// 发起网络请求
 	uni.request({
-		url: url,
-		method:method || "GET",
-		header:header,
+		url: websiteUrl + url,
+		method: method,
+		header: header,
 		data: data,
 		success: res => {
-			if(res.statusCode && res.statusCode != 200){ // api错误
-				uni.showModal({
-					content:res.msg
-				})
+			if(!res.data) {
+				param.onError()
 				return;
 			}
-			
-			typeof param.success == "function" && param.success(res.data);
+			if (res.data.encode === 200 || res.data.encode === '200') { // 访问成功, 调用success
+				typeof param.success == "function" && param.success(res.data);
+			}
+			if (res.data.encode !== 200 || res.data.encode !== '200') {
+				if (res.data.encode === 300 || res.data.encode === '300') { // 登录踢出
+					store.commit('isForceLoginout', true)
+					store.commit('logout')
+				}
+				if (res.data.encode === 310 || res.data.encode === '310') { // 登录超时
+					store.commit('isLoginTimeOut', true)
+					store.commit('logout')
+				}
+			}
+
+
 		},
 		fail: (e) => {
-			uni.showModal({
-				content: e.meg
+			uni.showToast({
+				title: '请求失败 , 请重试',
+				icon: "none"
 			})
-			typeof param.fail == "function" && param.fail(e.data);
+			typeof param.fail == "function" && param.fail('请求失败 , 请重试');
 		},
 		complete: () => {
 			// console.log("网络请求complete");
@@ -48,4 +80,4 @@ const request = (param) => {
 	})
 }
 
-module.exports = request; 
+module.exports = request;
