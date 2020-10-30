@@ -12,63 +12,68 @@
 		</view>
 
 		<view class="shortcut" v-if="appRole == 3">
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=TABLE_QUERY_SERVICE&title=服务分配">
 				<text class='shortcut-item-text'>{{ waitAllocationAccount }}</text>
 				<text class='shortcut-item-text'>待分配</text>
 			</navigator>
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=WAIT_SERVICE_CHANGE&title=变更审核&changeInfo=true">
 				<text class='shortcut-item-text'>{{ waitChangeAccount }}</text>
 				<text class='shortcut-item-text'>待变更</text>
 			</navigator>
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=SERVICE_CLOSE_QUERY&title=服务评价">
 				<text class='shortcut-item-text'>{{ waitEvaluateAccount }}</text>
 				<text class='shortcut-item-text'>待评价</text>
 			</navigator>
 		</view>
 
 		<view class="shortcut" v-if="appRole == 1 || appRole == 4">
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&title=今日新增&faultInfo=sysuserid&type=4&isNeedSearch=false">
 				<text class='shortcut-item-text'>{{ todayAddAccount }}</text>
 				<text class='shortcut-item-text'>今日新增</text>
 			</navigator>
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=TABLE_QUERY_SERVICE&title=未分配&faultInfo=sysuserid">
 				<text class='shortcut-item-text'>{{ waitAllocationAccount }}</text>
 				<text class='shortcut-item-text'>未分配</text>
 			</navigator>
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=SERVICE_DEALING&title=进行中&faultInfo=sysuserid&type=1">
 				<text class='shortcut-item-text'>{{ dealingAccount }}</text>
 				<text class='shortcut-item-text'>进行中</text>
 			</navigator>
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&title=我的服务&faultInfo=sysuserid&type=7">
 				<text class='shortcut-item-text'>{{ myserviceAccount }}</text>
 				<text class='shortcut-item-text'>我的服务</text>
 			</navigator>
 		</view>
 
 		<view class="shortcut" v-if="appRole == 2 || appRole == 5">
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url='../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&title=今日新增&faultInfo=personid&type=1&isNeedSearch=false'>
 				<text class='shortcut-item-text'>{{ todayAddAccount }}</text>
 				<text class='shortcut-item-text'>今日新增</text>
 			</navigator>
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=WAIT_CONFIRM&title=待确认&faultInfo=personid">
 				<text class='shortcut-item-text'>{{ waitConfirmAccount }}</text>
 				<text class='shortcut-item-text'>待确认</text>
 			</navigator>
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url="../../components/serviceList/serviceList?url=GET_WAIT_SERVICE&title=待服务&faultInfo=personid">
 				<text class='shortcut-item-text'>{{ waitServiceAccount }}</text>
 				<text class='shortcut-item-text'>待服务</text>
 			</navigator>
-			<navigator class='shortcut-item' url="">
+			<navigator class='shortcut-item' url='../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&title=我的服务&faultInfo=personid&type=10'>
 				<text class='shortcut-item-text'>{{ myserviceAccount }}</text>
 				<text class='shortcut-item-text'>我的服务</text>
 			</navigator>
 		</view>
 
-		<view style='height: 40rpx; width: 100%; background: #D9D9DA'></view>
+		<view class="middleView"></view>
 
 		<view class="index-menu">
 			<navigator class="index-menu-item" v-for="item in indexmenu" :key="item" :url="getIndexMenUrl(item)">
-				<image :src="item.icon" class="index-menu-item-img" mode="aspectFit"></image>
+				<image :src="getMenuImg(item.icon)" class="index-menu-item-img" mode="aspectFit"></image>
+				<text class="index-menu-item-text">{{ item.text }}</text>
+			</navigator>
+			<navigator class="index-menu-item">
+				<image src="../../static/images/menu18.png" class="index-menu-item-img" mode="aspectFit"></image>
+				<text class="index-menu-item-text">在线咨询</text>
 			</navigator>
 		</view>
 	</view>
@@ -98,12 +103,16 @@
 				indexmenu: []
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.appRole = wx.getStorageSync('appRole')
 			this.getServiceAccount(this.appRole)
 			this.getDynamicMenu()
 		},
 		methods: {
+			getMenuImg(imgUrl) {
+				const url = imgUrl.split('./../..')
+				return '../../static' + url[1]
+			},
 			getIndexMenUrl(item) {
 				let itemPackage = item.package;
 				let itemUrl = item.url;
@@ -201,15 +210,15 @@
 <style lang="scss">
 	.banner {
 		width: 100%;
-		height: 454rpx;
+		height: 460rpx;
 
 		.swiper {
 			width: 100%;
-			height: 454rpx;
+			height: 460rpx;
 
 			.img {
 				width: 100%;
-				height: 454rpx;
+				height: 460rpx;
 			}
 		}
 	}
@@ -242,16 +251,37 @@
 		}
 	}
 	
+	.middleView {
+		height: 40rpx; 
+		width: 100%; 
+		background: #D9D9DA
+	}
+	
 	.index-menu {
 		display: flex;
 		flex-wrap: wrap;
 		width: 100%;
+		height: 452rpx;
 		&-item {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 			width: 25%;
+			height: 50%;
 			text-align: center;
+			box-sizing: border-box;
 			&-img {
+				display: block;
 				width: 110rpx;
 				height: 110rpx;
+				padding-bottom: 20rpx;
+			}
+			&-text {
+				display: block;
+				font-size: 30rpx;
+				line-height: 1.4;
+				white-space: nowrap;
 			}
 		}
 	}

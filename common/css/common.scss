@@ -1,0 +1,20 @@
+page,
+view,
+input,
+text,
+form,
+navigator,
+rich-text,
+picker,
+scroll-view,
+cover-view,
+open-data {
+	box-sizing: border-box;
+}
+
+/* 文本溢出隐藏 */
+.text-ellipsis {
+	overflow: hidden; 
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+}

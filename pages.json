@@ -40,6 +40,13 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "components/serviceList/serviceList",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true
+			}
+
 		}
 	],
 	"globalStyle": {
@@ -55,33 +62,33 @@
 		"backgroundColor": "#f6f6f6",
 		"list": [{
 				"pagePath": "pages/noticeContent/noticeContent",
-				"iconPath": "images/notice_unselect.png",
-				"selectedIconPath": "images/notice_select.png",
+				"iconPath": "static/images/notice_unselect.png",
+				"selectedIconPath": "static/images/notice_select.png",
 				"text": "公告"
 			},
 			{
 				"pagePath": "pages/deviceDetail/deviceDetail",
-				"iconPath": "images/scanner_unselect.png",
-				"selectedIconPath": "images/scanner_select.png",
+				"iconPath": "static/images/scanner_unselect.png",
+				"selectedIconPath": "static/images/scanner_select.png",
 				"text": "设备扫描"
 			},
 			{
 				"pagePath": "pages/customerPage/customerPage",
 				"text": "工作",
-				"iconPath": "images/unselect_main_page.png",
-				"selectedIconPath": "images/select_main_page.png"
+				"iconPath": "static/images/unselect_main_page.png",
+				"selectedIconPath": "static/images/select_main_page.png"
 			},
 			{
 				"pagePath": "pages/wxChartSample/wxChartSample",
 				"text": "报表",
-				"iconPath": "images/unselect_disdata.png",
-				"selectedIconPath": "images/select_disdata.png"
+				"iconPath": "static/images/unselect_disdata.png",
+				"selectedIconPath": "static/images/select_disdata.png"
 			},
 			{
 				"pagePath": "pages/setting/setting",
 				"text": "我的",
-				"iconPath": "images/select_setting.png",
-				"selectedIconPath": "images/unselect_setting.png"
+				"iconPath": "static/images/select_setting.png",
+				"selectedIconPath": "static/images/unselect_setting.png"
 			}
 		]
 	}

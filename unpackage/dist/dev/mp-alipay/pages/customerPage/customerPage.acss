@@ -26,15 +26,15 @@
 /* 文章场景相关 */
 .banner {
   width: 100%;
-  height: 454rpx;
+  height: 460rpx;
 }
 .banner .swiper {
   width: 100%;
-  height: 454rpx;
+  height: 460rpx;
 }
 .banner .swiper .img {
   width: 100%;
-  height: 454rpx;
+  height: 460rpx;
 }
 .shortcut {
   display: -webkit-box;
@@ -70,6 +70,11 @@
 .shortcut-item-text:first-child {
   padding-bottom: 10rpx;
 }
+.middleView {
+  height: 40rpx;
+  width: 100%;
+  background: #D9D9DA;
+}
 .index-menu {
   display: -webkit-box;
   display: -webkit-flex;
@@ -77,13 +82,37 @@
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
   width: 100%;
+  height: 452rpx;
 }
 .index-menu-item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   width: 25%;
+  height: 50%;
   text-align: center;
+  box-sizing: border-box;
 }
 .index-menu-item-img {
+  display: block;
   width: 110rpx;
   height: 110rpx;
+  padding-bottom: 20rpx;
+}
+.index-menu-item-text {
+  display: block;
+  font-size: 30rpx;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 

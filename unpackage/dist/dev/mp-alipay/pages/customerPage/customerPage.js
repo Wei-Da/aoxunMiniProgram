@@ -101,9 +101,11 @@ var render = function() {
     var $orig = _vm.__get_orig(item)
 
     var m0 = _vm.getIndexMenUrl(item)
+    var m1 = _vm.getMenuImg(item.icon)
     return {
       $orig: $orig,
-      m0: m0
+      m0: m0,
+      m1: m1
     }
   })
 
@@ -149,6 +151,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(wx, uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
 
 
 
@@ -301,8 +308,12 @@ var _index = _interopRequireDefault(__webpack_require__(/*! @/apis/index.js */ 2
 //
 //
 //
-var _default = { data: function data() {return { swiper: [{ imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_01.png' }, { imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_02.png' }, { imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_03.png' }], appRole: '', waitAllocationAccount: '', waitChangeAccount: '', waitEvaluateAccount: '', todayAddAccount: '', dealingAccount: '', myserviceAccount: '', waitConfirmAccount: '', waitServiceAccount: '', indexmenu: [] };}, onLoad: function onLoad() {this.appRole = wx.getStorageSync('appRole');this.getServiceAccount(this.appRole);this.getDynamicMenu();}, methods: { getIndexMenUrl: function getIndexMenUrl(item) {var itemPackage = item.package;var itemUrl = item.url;itemPackage ? "".concat(itemPackage, "/").concat(itemUrl, "/").concat(itemUrl) : "".concat(itemUrl, "/").concat(itemUrl);}, getDynamicMenu: function getDynamicMenu() {var _this = this;this.$request({ url: _index.default["GET_DYNAMIC_MENU"], method: "POST", data: { "rid": wx.getStorageSync('userInfo').appRole }, success: function success(res) {var temMenu = [];for (var i = 0; i < res.info.length; i++) {temMenu[i] = { icon: res.info[i].icon, text: res.info[i].name, package: res.info[i].pkg, url: res.info[i].path };}_this.indexmenu = temMenu;} });}, getServiceAccount: function getServiceAccount(appRole) {var _this2 = this;if (appRole == '3') {this.$request({ url: _index.default['SERVICE_TABLE_ACCOUNT'], method: "POST", success: function success(res) {_this2.waitAllocationAccount = res.info[0].receptionWaitDistribution;_this2.waitChangeAccount = res.info[0].receptionWaitChange;_this2.waitEvaluateAccount = res.info[0].receptionWaitCheck;}, onError: function onError() {_this2.waitAllocationAccount = '--';_this2.waitChangeAccount = '--';_this2.waitEvaluateAccount = '--';} });}if (appRole == '1' || appRole == '4') {var params = {};params['faultInfo.sysuserid'] = uni.getStorageSync('userInfo').id;params['faultInfo.companyid'] = uni.getStorageSync('userInfo').companyId;
-        this.$request({
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { swiper: [{ imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_01.png' }, { imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_02.png' }, { imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_03.png' }], appRole: '', waitAllocationAccount: '', waitChangeAccount: '', waitEvaluateAccount: '', todayAddAccount: '', dealingAccount: '', myserviceAccount: '', waitConfirmAccount: '', waitServiceAccount: '', indexmenu: [] };}, onLoad: function onLoad() {this.appRole = wx.getStorageSync('appRole');this.getServiceAccount(this.appRole);this.getDynamicMenu();}, methods: { getMenuImg: function getMenuImg(imgUrl) {var url = imgUrl.split('./../..');return '../../static' + url[1];}, getIndexMenUrl: function getIndexMenUrl(item) {var itemPackage = item.package;var itemUrl = item.url;itemPackage ? "".concat(itemPackage, "/").concat(itemUrl, "/").concat(itemUrl) : "".concat(itemUrl, "/").concat(itemUrl);}, getDynamicMenu: function getDynamicMenu() {var _this = this;this.$request({ url: _index.default["GET_DYNAMIC_MENU"], method: "POST", data: { "rid": wx.getStorageSync('userInfo').appRole }, success: function success(res) {var temMenu = [];for (var i = 0; i < res.info.length; i++) {temMenu[i] = { icon: res.info[i].icon, text: res.info[i].name, package: res.info[i].pkg, url: res.info[i].path };}_this.indexmenu = temMenu;} });}, getServiceAccount: function getServiceAccount(appRole) {var _this2 = this;if (appRole == '3') {this.$request({ url: _index.default['SERVICE_TABLE_ACCOUNT'], method: "POST", success: function success(res) {_this2.waitAllocationAccount = res.info[0].receptionWaitDistribution;_this2.waitChangeAccount = res.info[0].receptionWaitChange;_this2.waitEvaluateAccount = res.info[0].receptionWaitCheck;}, onError: function onError() {_this2.waitAllocationAccount = '--';_this2.waitChangeAccount = '--';_this2.waitEvaluateAccount = '--';} });}if (appRole == '1' || appRole == '4') {var params = {};params['faultInfo.sysuserid'] = uni.getStorageSync('userInfo').id;params['faultInfo.companyid'] = uni.getStorageSync('userInfo').companyId;this.$request({
           url: _index.default['SERVICE_ACCOUNT_CUSTOMER'],
           method: "POST",
           data: params,

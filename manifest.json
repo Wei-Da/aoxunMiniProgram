@@ -74,5 +74,6 @@
     },
     "uniStatistics" : {
         "enable" : false
-    }
+    },
+		"sitemapLocation": "sitemap.json"
 }
