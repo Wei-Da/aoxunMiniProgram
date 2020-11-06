@@ -1,5 +1,8 @@
 <script>
 	export default {
+		globalData: {  
+			gloabalFomIds: []
+		},
 		onLaunch: function() {
 			console.log('App Launch')
 		},
@@ -12,8 +15,9 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	/*每个页面公共css */
+	@import "uview-ui/index.scss";
 	@import './common/css/iconfont.css';
 	@import './common/css/common.scss';
 </style>

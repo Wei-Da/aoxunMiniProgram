@@ -1,0 +1,245 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.device_des_group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #C0C0C0;
+}
+.device_des_image {
+  height: 70rpx;
+  width: 68rpx;
+  margin-left: 35rpx;
+  margin-top: 25rpx;
+  margin-right: 15rpx;
+}
+.device_des_text_view {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  padding-left: 5rpx;
+  margin-top: 12rpx;
+}
+.patrol_standard_des_group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  padding-bottom: 10rpx;
+  padding-top: 10rpx;
+}
+.patrol_standard_text {
+  margin-left: 25rpx;
+  /* margin-top: 10rpx; */
+  /* margin-bottom: 5rpx; */
+}
+.patrol_standard_text_detail {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  /* text-align: center */
+}
+.patrol_standard_des_text {
+  height: 200rpx;
+  padding: 5rpx;
+  margin: 10rpx;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  border: 1rpx solid #C0C0C0;
+  font-size: 27rpx;
+}
+/*  重写 checkbox 样式  */
+checkbox .wx-checkbox-input {
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  width: 40rpx;
+  height: 40rpx;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  border: none;
+  background: green;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #fff;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+.patrol_standard_image_check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  /* flex: 1; */
+}
+.patrol_standard_image_check_text {
+  height: 70rpx;
+  line-height: 70rpx;
+  margin-left: 25rpx;
+}
+.patrol_standard_image_check_line {
+  width: 10rpx;
+  background: white;
+}
+.patrol_standard_image_check_picture {
+  width: 100%;
+  height: 260rpx;
+}
+.patrol_standard_result {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  border-bottom: 1rpx solid #C0C0C0;
+  padding: 20rpx 20rpx;
+}
+.patrol_standard_result_button_group {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  margin-top: 20rpx;
+}
+.patrol_standard_note {
+  padding: 20rpx 20rpx;
+}
+.result_button {
+  width: 100%;
+  margin: 20rpx 0rpx;
+}
+.input-item-patrol {
+  height: 70rpx;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  border-bottom: 1rpx solid #DDDDDD;
+}
+.input-item-lable {
+  display: block;
+  width: 5em;
+  color: #666;
+  line-height: 70rpx;
+  margin-left: 25rpx;
+}
+.input-account {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  height: 80rpx;
+  margin: 20rpx 60rpx;
+}
+.radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.radio-item {
+  position: static;
+}
+/*画廊*/
+.gallery {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+/*每张图片所占容器*/
+.item {
+  position: relative;
+  margin: 5px;
+}
+/*删除按钮*/
+.delete {
+  position: absolute;
+  height: 20px;
+  bottom: 0;
+  width: 100%;
+  background: #ccc;
+  opacity: .8;
+}
+.delete image {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+

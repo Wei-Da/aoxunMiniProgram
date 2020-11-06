@@ -2,7 +2,7 @@
 	<view class="container">
 		<image v-show="isNeedSearch" class='search-btn' src='../../static/images/search_button.png' @click='onSearch'></image>
 		<template v-if="serviceList.length > 0">
-			<navigator v-for="(item, index) in serviceList" :key="index" class="service" url="">
+			<navigator v-for="(item, index) in serviceList" :key="index" class="service" :url="getUrl(item)">
 				<view class="service-left">
 					<image v-if="item.faultStatus == 1 || item.faultStatus == 3" class="service-left-img" src="../../static/images/serious_note.png"
 					 mode="aspectFill"></image>
@@ -83,7 +83,13 @@
 					formData.type = this.type
 				}
 				if (this.faultInfo) {
-					formData['faultInfo.' + this.faultInfo] = uni.getStorageSync('userInfo').id
+					let getId
+					if(this.faultInfo === 'personid' || this.faultInfo === 'sysuserid') {
+						getId = uni.getStorageSync('userInfo').id
+					} else if(this.faultInfo === 'original' || this.faultInfo === 'companyid') {
+						getId = uni.getStorageSync('userInfo').companyId
+					}
+					formData['faultInfo.' + this.faultInfo] = getId
 				}
 				if (this.changeInfo) {
 					if (uni.getStorageSync('appRole') == '3') {
@@ -103,8 +109,26 @@
 						console.log("serviceList", this.serviceList)
 					}
 				})
+			},
+			onSearch() {
+				uni.navigateTo({
+					url: '/pages/searchPage/searchPage'
+				})
+			},
+			getUrl(item) {
+				console.log("item.faultStatus", item.faultStatus)
+				console.log("item.version", item.version)
+				if(item.faultStatus == '5' || item.faultStatus == '6') {
+					return `../../pages/waitServiceDetail/waitServiceDetail?item=${encodeURIComponent(JSON.stringify(item))}`
+				} else if(item.faultStatus == '3') {
+					return `../../pages/waitConfirmDetail/waitConfirmDetail?item=${encodeURIComponent(JSON.stringify(item))}`
+				} else if(item.version == '3.3') {
+					return `../../pages/serviceHistoryRecordDetail/serviceHistoryRecordDetail?item=${encodeURIComponent(JSON.stringify(item))}`
+				} else {
+					return `../../pages/oldVersionFileDetail/oldVersionFileDetail?item=${encodeURIComponent(JSON.stringify(item))}`
+				}
 			}
-		},
+		}
 	}
 </script>
 

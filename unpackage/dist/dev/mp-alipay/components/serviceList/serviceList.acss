@@ -26,7 +26,17 @@
 /* 文章场景相关 */
 .container {
   width: 100%;
-  padding: 0 5rpx;
+  padding: 0 20rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.container .search-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 60rpx;
+  width: 90rpx;
+  height: 90rpx;
+  z-index: 100;
 }
 .container .service {
   width: 100%;
@@ -34,10 +44,57 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   padding: 20rpx 0;
+  border-bottom: 2rpx solid #e8e8e8;
 }
-.container .service-img {
+.container .service-left {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   width: 126rpx;
-  height: auto;
+  height: 100%;
+}
+.container .service-left-img {
+  width: 126rpx;
+  height: 126rpx;
+}
+.container .service-right {
+  margin-left: 20rpx;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  overflow: hidden;
+}
+.container .service-right-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 34rpx;
+  white-space: nowrap;
+  margin-bottom: 10rpx;
+}
+.container .service-right-title {
+  color: #333;
+}
+.container .service-right-tags-text {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border: 2rpx solid #f7982a;
+  line-height: 28rpx;
+  color: #f7982a;
+  font-size: 28rpx;
+  -webkit-border-radius: 4rpx;
+          border-radius: 4rpx;
+}
+.container .service-right-date {
+  color: #666;
+}
+.container .no-data-img {
+  width: 100%;
 }
 

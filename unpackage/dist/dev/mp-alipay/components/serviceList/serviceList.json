@@ -1,5 +1,5 @@
 {
   "defaultTitle": "",
-  "pullRefresh": false,
+  "pullRefresh": true,
   "usingComponents": {}
 }

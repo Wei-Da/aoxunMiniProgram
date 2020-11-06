@@ -6,7 +6,9 @@
     "pages/deviceDetail/deviceDetail",
     "pages/wxChartSample/wxChartSample",
     "pages/setting/setting",
-    "components/serviceList/serviceList"
+    "components/serviceList/serviceList",
+    "pages/searchPage/searchPage",
+    "pages/serviceListDetail/serviceListDetail"
   ],
   "subPackages": [],
   "window": {
@@ -54,5 +56,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap56.json"
 }

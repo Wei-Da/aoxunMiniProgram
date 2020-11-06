@@ -104,7 +104,7 @@
 			}
 		},
 		onShow() {
-			this.appRole = wx.getStorageSync('appRole')
+			this.appRole = uni.getStorageSync('appRole')
 			this.getServiceAccount(this.appRole)
 			this.getDynamicMenu()
 		},
@@ -116,7 +116,84 @@
 			getIndexMenUrl(item) {
 				let itemPackage = item.package;
 				let itemUrl = item.url;
-				itemPackage ? `${itemPackage}/${itemUrl}/${itemUrl}` : `${itemUrl}/${itemUrl}`;
+				console.log(`${itemPackage}/${itemUrl}`)
+				switch(itemUrl) {
+					// serviceCompany 目录下
+					// 我要保修
+					case 'mineCreateService':
+						return ''
+					break;
+					// 我的服务
+					case 'myService':
+						return `../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=personid&type=10&title=${item.text}`;
+					break;
+					// 历史记录
+					case 'serviceHistoryRecord':
+						return `../../components/serviceList/serviceList?url=HISTORY_RECORD&faultInfo=personid&title=${item.text}`;
+					break;
+					// 知识帮助
+					case 'libSearch':
+						return '../searchPage/searchPage'
+					break;
+					case 'companyRecord':
+						return `../../components/serviceList/serviceList?url=HISTORY_RECORD&faultInfo=original&title=${item.text}`;
+					break;
+					case 'serviceTodayAdd':
+						return `../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=personid&type=1&title=${item.text}`;
+					break;
+					// customerService 目录下
+					case 'customerCompanyRecord':
+						return `../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=companyid&type=5&title=${item.text}`;
+					break;
+					case 'customerDealingService':
+						return `../../components/serviceList/serviceList?url=SERVICE_DEALING&faultInfo=sysuserid&type=1&title=${item.text}`;
+					break;
+					case 'customerServiceClose':
+						return `../../components/serviceList/serviceList?url=SERVICE_CLOSE_QUERY&faultInfo=sysuserid&title=${item.text}`;
+					break;
+					case 'customerTodayAdd':
+						return `../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=sysuserid&title=${item.text}`;
+					break;
+					case 'customerWaitAllocation':
+						return `../../components/serviceList/serviceList?url=TABLE_QUERY_SERVICE&faultInfo=sysuserid&title=${item.text}`;
+					break;
+					case 'faultRecord':
+						return `../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=sysuserid&title=${item.text}`;
+					break;
+					case 'repairRecord':
+						return `../../components/serviceList/serviceList?url=HISTORY_RECORD&faultInfo=personid&title=${item.text}`;
+					break;
+					// 待确认
+					case 'waitConfirm':
+						return `../../components/serviceList/serviceList?url=WAIT_CONFIRM&faultInfo=personid&title=${item.text}`;
+					break;
+					// 待服务
+					case 'waitService':
+						return `../../components/serviceList/serviceList?url=GET_WAIT_SERVICE&faultInfo=personid&title=${item.text}`;
+					break;
+					// serviceTable 目录下
+					case 'serviceChange':
+						return `../../components/serviceList/serviceList?url=WAIT_SERVICE_CHANGE&changeInfo=true&title=${item.text}`;
+					break;
+					case 'serviceFile':
+						return `../../components/serviceList/serviceList?url=GET_SERVICE_FILE&title=${item.text}`;
+					break;
+					case 'serviceQuery':
+						return `../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&title=${item.text}`;
+					break;
+					case 'serviceRecord':
+						return `../../components/serviceList/serviceList?url=TABLE_QUERY_SERVICE&title=${item.text}`;
+					break;
+					case 'serviceSelfHelp':
+						return `../../components/serviceList/serviceList?url=TABLE_QUERY_SERVICE&title=${item.text}`;
+					break;
+					case 'serviceTableClose':
+						return `../../components/serviceList/serviceList?url=SERVICE_CLOSE_QUERY&title=${item.text}`;
+					break;
+					case 'serviceTableDeal':
+						return `../../components/serviceList/serviceList?url=DEAL_SERVICE&title=${item.text}`;
+					break;
+				}
 			},
 			getDynamicMenu() {
 				this.$request({

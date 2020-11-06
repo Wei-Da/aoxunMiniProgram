@@ -1,9 +1,8 @@
 import store from '../../store/index.js'
 
-const websiteUrl = 'https://www.njbhhelp.com/'
+export const websiteUrl = 'https://www.njbhhelp.com/'
 
-
-const request = (param) => {
+export const request = (param) => {
 	let url = param.url;
 	let method = param.method || 'GET';
 	let header = param.header || {};
@@ -79,5 +78,3 @@ const request = (param) => {
 		}
 	})
 }
-
-module.exports = request;
