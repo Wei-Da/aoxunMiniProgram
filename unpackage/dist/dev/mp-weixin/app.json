@@ -8,7 +8,21 @@
     "pages/setting/setting",
     "components/serviceList/serviceList",
     "pages/searchPage/searchPage",
-    "pages/serviceListDetail/serviceListDetail"
+    "pages/waitServiceDetail/waitServiceDetail",
+    "pages/waitConfirmDetail/waitConfirmDetail",
+    "pages/serviceHistoryRecordDetail/serviceHistoryRecordDetail",
+    "pages/oldVersionFileDetail/oldVersionFileDetail",
+    "pages/serviceSign/serviceSign",
+    "pages/addServiceRecord/addServiceRecord",
+    "pages/checkReport/checkReport",
+    "pages/serviceClose/serviceClose",
+    "pages/serviceDescribe/serviceDescribe",
+    "pages/patrolContentHistory/patrolContentHistory",
+    "pages/patrolPageDetail/patrolPageDetail",
+    "pages/personalInfo/personalInfo",
+    "pages/modifyPwd/modifyPwd",
+    "pages/modifyLoginName/modifyLoginName",
+    "pages/versionsPage/versionsPage"
   ],
   "subPackages": [],
   "window": {
@@ -56,5 +70,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap56.json"
+  "sitemapLocation": "sitemap41.json"
 }

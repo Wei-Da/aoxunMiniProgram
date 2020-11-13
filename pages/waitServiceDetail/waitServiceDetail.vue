@@ -2,7 +2,81 @@
 	<view class="container">
 		<!-- uView的toast -->
 		<u-toast ref="uToast" />
-		<view class="title">
+
+		<!-- 服务增派的页面弹窗 -->
+		<u-modal :title="服务增派" :show-title="true" :show-cancel-button="true" v-model="transferHidden" :mask-close-able="true" @confirm="modalTransferChange" @cancel="modalTransferCancel">
+
+			<view class="input-list slot-content">
+				<view class="input-item">
+					<text class="input-item-lable">选择部门</text>
+					<picker class="input-item-content" @change="bindPickerChange" data-pickername="companyDept" :value="companyDeptIndex"
+					 :range="companyDepts" mode="selector">
+						<view>
+							{{companyDepts[companyDeptIndex] || ""}}
+						</view>
+					</picker>
+				</view>
+				<view class="input-item">
+					<text class="input-item-lable">选择人员</text>
+					<picker class="input-item-content" @change="bindPickerChange" data-pickername="companyMember" :value="companyMemberIndex"
+					 :range="companyMembers" mode="selector">
+						<view>
+							{{companyMembers[companyMemberIndex] || ""}}
+						</view>
+					</picker>
+				</view>
+			</view>
+
+		</u-modal>
+
+		<!-- 服务变更的页面弹窗 -->
+		<u-modal :title="服务变更" :show-title="true" :show-cancel-button="true" v-model="changeHidden" :mask-close-able="true" @confirm="modalServiceChange">
+
+			<view class="input-list slot-contents">
+				<view class="input-item">
+					<text class="input-item-lable">变更类型</text>
+					<picker class="input-item-content" @change="bindPickerChange" data-pickername="changeType" :value="changeTypeIndex"
+					 :range="changeTypes" mode="selector">
+						<view>
+							{{changeTypes[changeTypeIndex] || ""}}
+						</view>
+					</picker>
+				</view>
+				<view class="input-item" v-if="isPersonChange">
+					<text class="input-item-lable">选择部门</text>
+					<picker class="input-item-content" @change="bindPickerChange" data-pickername="companyDeptChange" :value="companyDeptChangeIndex"
+					 :range="changeCompanyDepts" mode="selector">
+						<view>
+							{{changeCompanyDepts[companyDeptChangeIndex] || ""}}
+						</view>
+					</picker>
+				</view>
+				<view class="input-item" v-if="isPersonChange">
+					<text class="input-item-lable">选择人员</text>
+					<picker class="input-item-content" @change="bindPickerChange" data-pickername="companyMemberChange" :value="companyMemberChangeIndex"
+					 :range="changeCompanyMembers" mode="selector">
+						<view>
+							{{changeCompanyMembers[companyMemberChangeIndex] || ""}}
+						</view>
+					</picker>
+				</view>
+				<view class="input-item" v-if="!isPersonChange">
+					<text class="input-item-lable">当前权重</text>
+					<text class="input-item-content" :value="weight">{{weight}}</text>
+				</view>
+				<view class="input-item" v-if="!isPersonChange">
+					<text class="input-item-lable">修改权重</text>
+					<input class="input-item-content" type='number' @input='getNewWeight'></input>
+				</view>
+				<view class="input-item">
+					<text class="input-item-lable">变更描述</text>
+					<text type='text' style='flex:1;text-align: right' @click='transferDescribe'>{{serviceDescribe}}</text>
+					<image class="transfer_image" src='../../static/images/transfer.png'></image>
+				</view>
+			</view>
+		</u-modal>
+
+		<view class="service-title">
 			<view class="left">
 				<text>负责人员：{{servicer}}</text>
 				<text>公司名称：{{companyName}}</text>
@@ -19,7 +93,9 @@
 				<text class="tab-bar-item" :class="{ on : currentIndex === 2 }" @click="switchTabBar(2)">关联资产</text>
 				<text class="tab-bar-item" :class="{ on : currentIndex === 3 }" @click="switchTabBar(3)">处理记录</text>
 				<text class="tab-bar-item" :class="{ on : currentIndex === 4 }" @click="switchTabBar(4)">知识库</text>
-				<text class="tab-bar-item" @click="showActionSheet">操作</text>
+				<form report-submit="true" @submit="moreOperation">
+					<button form-type="submit" style="height: 60rpx;" class="tab-bar-btn" @click="showActionSheet">操作</button>
+				</form>
 				<u-action-sheet :list="actionSheetItems" v-model="actionSheetHidden" @click="clickActionSheet"></u-action-sheet>
 			</view>
 			<view class="divider"></view>
@@ -162,7 +238,7 @@
 						<view v-if="audioPath == ''" class="value">
 							: 暂无
 						</view>
-						<view v-else class="value">
+						<view v-else class="value" @click="bindtapPlayAudio">
 							<image class="audio_image" src='../../static/images/audio_icon.png'></image>
 							<text>: 语音</text>
 							<image class="record_image" :src="getAudioImg"></image>
@@ -209,7 +285,7 @@
 					<text class='assert-title-text'>服务进度 </text>
 					<text> ({{ personName || '工程师未确认' }})</text>
 				</view>
-				<swiper class="step-group" duration="300" :style="{height: mHeight + 'rpx'}">
+				<swiper class="step-group" duration="300" :style="{height: mHeight + 'rpx'}" @change="bindchangeSwiper">
 					<block v-for="(steps, index) in serviceSteps" :key="index">
 						<swiper-item>
 							<scroll-view scroll-y="true" class="scoll-h">
@@ -394,10 +470,12 @@
 
 <script>
 	import serviceCode from '@/apis/index.js';
+	const app = getApp()
+	
 	export default {
 		onLoad(option) {
+			console.log('waitServiceDetail')
 			const item = JSON.parse(decodeURIComponent(option.item));
-			console.log("item", item)
 			this.servicer = item.personName;
 			this.companyName = item.companyNameRepair;
 			this.phoneNo = item.personMobile;
@@ -423,26 +501,28 @@
 				}
 			});
 		},
+		onShow() {
+			this.getServiceDetail()
+			let serviceDescribe = uni.getStorageSync('serviceDescribe')
+			uni.setStorageSync('serviceDescribe', '')
+			this.serviceDescribe = serviceDescribe == '' ? '请输入描述' : serviceDescribe.length < 10 ? serviceDescribe :
+				serviceDescribe.substring(0, 10) + '...'
+		},
 		data() {
 			return {
-				currentIndex: 0,
 				servicer: '',
 				companyName: '',
 				phoneNo: '',
 				faultId: '',
 				serviceId: '',
 				faultIp: '',
-				personId: '',
-				processId: '',
-				perId: '',
 				faultInfo: '',
-				audioPath: '',
-				pictures: '',
-				isPlayAudio: false,
+				equmentInfo: '',
+				knowledges: '',
+				forwardRecords: '',
+				pictures: [],
 				checkPicture: [],
-				personName: '',
-				serviceSteps: [],
-				mHeight: '',
+
 				defaultSteps: [{
 						addr: '',
 						dualdate: '待定',
@@ -498,10 +578,12 @@
 						isPass: false
 					},
 				],
-				equmentInfo: '',
-				forwardRecords: '',
+				serviceSteps: [],
+				account: 0,
+				currentTab: 0,
 				currentItem: 0,
 				clickItem: 0,
+
 				actionSheetHidden: false,
 				actionSheetItems: [{
 						text: '服务签到'
@@ -519,6 +601,43 @@
 						text: '添加验收图'
 					},
 				],
+
+				modalHidden: true,
+				modalTitle: '',
+				closeModalHidden: true,
+				weight: '',
+				popErrorMsg: '',
+				requestAddress: '',
+				isPlayAudio: false,
+				audioPath: '',
+				transferHidden: false,
+				personId: '',
+				companyDepts: ['请选择'],
+				companyDeptIndex: 0,
+				companyDeptInfo: "",
+				companyMembers: ['请选择'],
+				companyMemberIndex: 0,
+				companyMemberInfo: "",
+
+				changeHidden: false,
+				companyDeptChangeIndex: 0,
+				changeCompanyDepts: ['请选择'],
+				changeCompanyDeptInfos: "",
+				changeCompanyMembers: ['请选择'],
+				companyMemberChangeIndex: 0,
+				changeCompanyMemberInfos: "",
+				mHeight: '',
+
+				processId: '',
+				perId: '',
+				changeTypes: ['人员变更', '权重变更'],
+				changeTypeIndex: 0,
+				isPersonChange: true,
+				serviceDescribe: '',
+				newWeight: '',
+				personName: '',
+				listTimeRecord: '',
+				currentIndex: 0,
 			};
 		},
 		components: {
@@ -531,6 +650,13 @@
 			}
 		},
 		methods: {
+			moreOperation(e) {
+				this.dealFormIds(e.detail.formId);
+				this.actionSheetHidden = true;
+			},
+
+
+
 			clickActionSheet(index) {
 				const eventName = this.actionSheetItems[index].bindtap
 				this[eventName]()
@@ -538,9 +664,10 @@
 			switchTabBar(index) {
 				this.currentIndex = index;
 			},
+			
+			// 点击操作按钮
 			showActionSheet() {
 				this.actionSheetHidden = true;
-
 			},
 			getServiceDetail() {
 				const param = {
@@ -557,6 +684,17 @@
 					method: 'POST',
 					data: param,
 					success: (res) => {
+						this.faultInfo = res.listFaultInfo[0];
+						// 页签: 关联资产
+						this.equmentInfo = res.listEqumentInfo[0];
+						// 页签: 知识库
+						this.knowledges = res.listKnowledge;
+						// 页签: 处理记录
+						this.forwardRecords = res.listForwardRecord;
+
+						this.listTimeRecord = res.listTimeRecord;
+
+						this.weight = res.listFaultInfo[0].weight;
 						let map = {
 							'1': "服务创建",
 							'3': "服务分配",
@@ -565,7 +703,6 @@
 							'7': "服务关闭",
 							'9': "服务客评"
 						};
-						this.faultInfo = res.listFaultInfo[0];
 						// 故障等级
 						if (this.faultInfo.faultLevel) {
 							if (this.faultInfo.faultLevel == 10) {
@@ -771,10 +908,6 @@
 						}
 						this.serviceSteps = totalTempSteps
 
-						// 关联资产
-						this.equmentInfo = res.listEqumentInfo[0];
-						// 处理记录
-						this.forwardRecords = res.listForwardRecord;
 						// 操作
 						if (this.faultInfo.isSign == '2') {
 							if (this.personId == uni.getStorageSync("userInfo").id) {
@@ -911,7 +1044,7 @@
 
 							}
 						} else {
-							if (this.personId == wx.getStorageSync("userInfo").id) {
+							if (this.personId == uni.getStorageSync("userInfo").id) {
 								this.actionSheetItems = [{
 										bindtap: 'serviceSign',
 										text: '服务签到'
@@ -996,7 +1129,7 @@
 									this.audioPath = this.$websiteUrl + serviceCode['IMAGE_URL'] + res.info[res.info.length - 1].url
 								} else {
 									for (let i = 0; i < res.info.length; i++) {
-										loadPictures[i] = this.$websiteUrl + app.serviceCode['IMAGE_URL'] + res.info[i].url
+										loadPictures[i] = this.$websiteUrl + serviceCode['IMAGE_URL'] + res.info[i].url
 									}
 								}
 							}
@@ -1005,6 +1138,7 @@
 					}
 				})
 			},
+
 			previewImage(path) {
 				uni.getImageInfo({
 					src: path,
@@ -1016,6 +1150,20 @@
 					}
 				})
 			},
+
+			previewSignImage(e) {
+				const path = e.target.dataset.src;
+				uni.getImageInfo({
+					src: path,
+					success: (res) => {
+						uni.previewImage({
+							current: res.path,
+							urls: [res.path],
+						})
+					}
+				})
+			},
+
 			clickLib(index) {
 				if (this.clickItem == index) {
 					this.currentItem = index;
@@ -1025,6 +1173,7 @@
 					this.clickItem = index;
 				}
 			},
+
 			// 签到
 			serviceSign() {
 				uni.navigateTo({
@@ -1032,6 +1181,7 @@
 						this.perId,
 				})
 			},
+
 			// 添加记录
 			addRecord() {
 				console.log('bindAddRecord');
@@ -1083,6 +1233,330 @@
 				uni.navigateTo({
 					url: '../checkReport/checkReport?faultId=' + this.faultId,
 				})
+			},
+			// 服务结束
+			serviceClose() {
+				if (this.faultInfo.isSign == '2') {
+					if (this.forwardRecords != null && this.forwardRecords != "") {
+						uni.redirectTo({
+							url: '../serviceClose/serviceClose?faultId=' + this.faultId + '&weight=' + this.weight + '&processId=' + this.processId +
+								'&processPerId=' + this.perId + '&serviceCompanyId=' + this.faultInfo.serviceCompanyId,
+						})
+					} else {
+						this.$refs.uToast.show({
+							title: '请添加服务记录',
+							type: 'error'
+						})
+					}
+				} else {
+					this.$refs.uToast.show({
+						title: '请先签到',
+						type: 'error'
+					})
+				}
+			},
+			// 增派
+			serviceTransfer() {
+				this.transferHidden = true;
+				this.requestDepartment(uni.getStorageSync('userInfo').companyId, false);
+			},
+			// 服务变更
+			serviceChange() {
+				this.changeHidden = true;
+				this.requestDepartment(uni.getStorageSync('userInfo').companyId, true);
+			},
+
+			getNowFormatDate() {
+				let date = new Date();
+				let seperator1 = "-";
+				let seperator2 = ":";
+				let month = date.getMonth() + 1;
+				let strDate = date.getDate();
+				let hour = date.getHours();
+				let minutes = date.getMinutes();
+				let seconds = date.getSeconds();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				if (hour >= 0 && hour <= 9) {
+					hour = "0" + hour;
+				}
+				if (minutes >= 0 && minutes <= 9) {
+					minutes = "0" + minutes;
+				}
+				if (seconds >= 0 && seconds <= 9) {
+					seconds = "0" + seconds;
+				}
+				const currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+					" " + hour + seperator2 + minutes +
+					seperator2 + seconds;
+				return currentdate;
+			},
+
+			dealFormIds(formId) {
+				let formIds = app.globalData.gloabalFomIds; //获取全局数据中的推送码gloabalFomIds数组
+				if (!formIds) formIds = [];
+				let data = {
+					formId: formId,
+					expire: parseInt(new Date().getTime()) + 604800000 //计算7天后的过期时间时间戳
+				}
+				formIds.push(data); //将data添加到数组的末尾
+				app.globalData.gloabalFomIds = formIds; //保存推送码并赋值给全局变量
+			},
+
+			bindtapPlayAudio() {
+				
+				this.isPlayAudio = !this.isPlayAudio;
+				uni.downloadFile({
+					url: this.audioPath,
+					success: (res) => {
+						const innerAudioContext = uni.createInnerAudioContext();
+						// 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+						if (res.statusCode === 200) {
+							innerAudioContext.autoplay = true
+							innerAudioContext.src = res.tempFilePath
+							innerAudioContext.onPlay(() => {
+								console.log('开始播放')
+							})
+							innerAudioContext.onError((res) => {
+								console.log(res.errMsg)
+								console.log(res.errCode)
+							})
+						}
+					}
+				})
+			},
+
+			bindPickerChange(e) {
+				const eindex = e.detail.value;
+				const name = e.currentTarget.dataset.pickername;
+				switch (name) {
+					case 'companyDept':
+						this.companyDeptIndex = eindex;
+						this.companyMemberIndex = 0;
+						if (eindex > 0) {
+							this.requestServiceName(this.companyDeptInfo[eindex - 1].id, false);
+						}
+						break;
+					case 'companyMember':
+						this.companyMemberIndex = eindex;
+						break;
+					case 'companyDeptChange':
+						this.companyDeptChangeIndex = eindex;
+						this.companyMemberChangeIndex = 0;
+						if (eindex > 0) {
+							this.requestServiceName(this.changeCompanyDeptInfos[eindex - 1].id, true);
+						}
+						break;
+					case 'companyMemberChange':
+						this.companyMemberChangeIndex = eindex;
+						break;
+					case 'changeType':
+						if (eindex == 0) {
+							this.changeTypeIndex = eindex;
+							this.isPersonChange = true;
+						} else {
+							this.changeTypeIndex = eindex;
+							this.isPersonChange = false;
+						}
+						break;
+				}
+			},
+
+			transferDescribe() {
+				uni.navigateTo({
+					url: '../serviceDescribe/serviceDescribe',
+				})
+			},
+
+			// 获取部门信息
+			requestDepartment(compnayId, isChangeService) {
+				let temDepartments = ['请选择'];
+				const param = {
+					"companyId": compnayId
+				}
+				this.$request({
+					url: serviceCode["QUERY_COMPANY_DEPARTMENT"],
+					method: 'POST',
+					data: param,
+					success: (res) => {
+						if (isChangeService) {
+							for (let i = 0; i < res.detail.length; i++) {
+								temDepartments[i + 1] = res.detail[i].name;
+							}
+							this.changeCompanyDepts = temDepartments;
+							this.changeCompanyDeptInfos = res.detail;
+						} else {
+							for (let i = 0; i < res.detail.length; i++) {
+								temDepartments[i + 1] = res.detail[i].name;
+							}
+							this.companyDepts = temDepartments;
+							this.companyDeptInfo = res.detail;
+						}
+					}
+				})
+			},
+
+			// 获取人员名称
+			requestServiceName(deptId, isChangeService) {
+				let temNames = ['请选择'];
+				const param = {
+					"deptId": deptId,
+					"id": uni.getStorageSync("userInfo").id
+				}
+				this.$request({
+					url: serviceCode["GET_TRANSFER_PERSON_NAME"],
+					method: 'POST',
+					data: param,
+					success: (res) => {
+						if (isChangeService) {
+							for (let i = 0; i < res.detail.length; i++) {
+								temNames[i + 1] = res.detail[i].userName;
+							}
+							this.changeCompanyMembers = temNames;
+							this.changeCompanyMemberInfos = res.detail;
+						} else {
+							for (let i = 0; i < res.detail.length; i++) {
+								temNames[i + 1] = res.detail[i].userName;
+							}
+							this.companyMembers = temNames;
+							this.companyMemberInfo = res.detail;
+						}
+					}
+				})
+			},
+
+			// 增派模态框点击确定时执行
+			modalTransferChange() {
+				const temNames = ['请选择'];
+				if (this.companyDeptIndex == 0) {
+					this.$refs.uToast.show({
+						title: '请选择部门',
+						type: 'error'
+					})
+					return;
+				}
+				if (this.companyMemberIndex == 0) {
+					this.$refs.uToast.show({
+						title: '请选择人员',
+						type: 'error'
+					})
+					return;
+				}
+				const param = {
+					"faultUser.faultId": this.faultId,
+					"faultUser.userId": this.companyMemberInfo[this.companyMemberIndex - 1].id,
+					"faultUser.stage": '3',
+					"faultUser.phone": this.companyMemberInfo[this.companyMemberIndex - 1].mobile,
+					'processId': this.processId,
+					'processPerId': this.processPerId,
+					'userId': uni.getStorageSync('userInfo').id
+				}
+				this.$request({
+					url: serviceCode["UPDATE_SERVICE_TRANSFER"],
+					method: 'POST',
+					data: param,
+					success: (res) => {
+						uni.navigateBack({})
+					}
+				})
+			},
+
+			// 服务变更点击确定时执行
+			modalServiceChange() {
+				if (this.isPersonChange) {
+					if (this.companyDeptChangeIndex == 0) {
+						this.$refs.uToast.show({
+							title: '请选择部门',
+							type: 'error'
+						})
+						return;
+					}
+					if (this.companyMemberChangeIndex == 0) {
+						this.$refs.uToast.show({
+							title: '请选择人员',
+							type: 'error'
+						})
+						return;
+					}
+				} else {
+					if (this.newWeight == '') {
+						this.$refs.uToast.show({
+							title: '请填写变更权重',
+							type: 'error'
+						})
+						return;
+					}
+				}
+				if (this.serviceDescribe == '' || this.serviceDescribe == '请输入描述') {
+					this.$refs.uToast.show({
+						title: '请填写服务描述',
+						type: 'error'
+					})
+					return;
+				}
+				let param = {
+					"changeInfo.faultId": this.faultId,
+					"changeInfo.oldPerson": uni.getStorageSync("userInfo").id,
+					"changeInfo.type": '1',
+					'processId': this.processId,
+					'processPerId': this.processPerId,
+					'changeInfo.processId': this.processId,
+					'changeInfo.changeUserid': this.personId,
+					'changeInfo.content': this.serviceDescribe
+				}
+
+				if (this.isPersonChange) {
+					param["changeInfo.newPerson"] = this.changeCompanyMemberInfos[this.companyMemberChangeIndex - 1].id;
+					param["changeInfo.reviewedType"] = 2;
+				} else {
+					param["changeInfo.oldWeight"] = this.weight;
+					param["changeInfo.newWeight"] = this.newWeight;
+					param["changeInfo.reviewedType"] = 1;
+				}
+
+				if (this.personId == uni.getStorageSync("userInfo").id) {
+					param["changeInfo.sysType"] = "1"
+				} else {
+					param["changeInfo.sysType"] = "2"
+				}
+
+				this.$request({
+					url: serviceCode["SERVICE_CHANGE"],
+					method: 'POST',
+					data: param,
+					success: (res) => {
+						if (res.resultcode == '2') {
+							uni.navigateBack({})
+						} else {
+							this.changeHidden = false;
+							this.$refs.uToast.show({
+								title: '变更失败!当前有未完成变更的工单!',
+								type: 'error'
+							})
+						}
+					}
+				})
+			},
+
+			getNewWeight(e) {
+				this.newWeight = e.detail.value;
+			},
+
+			bindchangeSwiper(e) {
+				let steps = this.listTimeRecord;
+				if (steps != '' && steps.length > 0) {
+					this.personName = steps[e.detail.current] != '' && steps[e.detail.current].length > 2 ? steps[e.detail.current][2]
+						.processingPerson : '';
+					this.currentIndex = e.detail.current;
+				}
+			},
+			
+			modalTransferCancel() {
+				this.transferHidden = false;
 			}
 		}
 	}
@@ -1093,7 +1567,7 @@
 		padding: 15rpx;
 		box-sizing: border-box;
 
-		.title {
+		.service-title {
 			display: flex;
 			width: 100%;
 			height: 180rpx;
@@ -1134,6 +1608,14 @@
 					flex: 1;
 					text-align: center;
 					padding: 10rpx 0;
+					font-size: 25rpx;
+				}
+
+				.tab-bar-btn {
+					display: flex;
+					align-items: center;
+					color: #49B2F2;
+					font-size: 25rpx;
 				}
 
 				.on {
@@ -1398,6 +1880,7 @@
 					height: 100rpx;
 					padding: 30rpx 5rpx;
 				}
+
 			}
 		}
 	}

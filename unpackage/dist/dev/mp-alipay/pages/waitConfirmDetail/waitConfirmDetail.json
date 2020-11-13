@@ -1,5 +1,9 @@
 {
   "defaultTitle": "",
   "pullRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast",
+    "u-modal": "/uview-ui/components/u-modal/u-modal",
+    "u-action-sheet": "/uview-ui/components/u-action-sheet/u-action-sheet"
+  }
 }

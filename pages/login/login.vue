@@ -19,15 +19,20 @@
 			</view>
 			<view class="form-item">
 				<checkbox-group class="checkbox-wrap" @change="checkboxChange">
-					<label class="label" v-for="item in checkboxItems" :key="item">
+					<label class="label" v-for="(item, index) in checkboxItems" :key="item.value">
 						<checkbox :value="item.value" :checked="item.isChecked" color="#09bb07" />{{item.name}}
 					</label>
 				</checkbox-group>
 			</view>
 			<view class="form-item">
 				<radio-group class="checkbox-wrap" @change="radioChange">
-					<label class="label" v-for="item in radioItems" :key="item">
-						<radio :value="item.value" :checked="item.isChecked" color="#09bb07" />{{item.name}}
+					<label class="label" v-for="(item, index) in radioItems" :key="item.value">
+						<view class="">
+							<radio :value="item.value" :checked="item.isChecked" color="#09bb07" />
+						</view>
+						<view class="">
+							{{item.name}}
+						</view>
 					</label>
 				</radio-group>
 			</view>
@@ -44,6 +49,7 @@
 
 <script>
 	import serviceCode from '@/apis/index.js';
+
 	export default {
 		data() {
 			return {
@@ -116,6 +122,7 @@
 		},
 		methods: {
 			bindLogin(e) {
+				console.log('登录')
 				const username = e.detail.value.usernameValue;
 				const password = e.detail.value.passwordValue;
 				const serial = e.detail.value.serialValue;
@@ -167,6 +174,7 @@
 						weixinCode: weixinCode,
 					},
 					success: (res) => {
+						console.log('LOGIN', res)
 						if (res.resultcode === '1' || res.resultcode === 1) { // 用户名或密码错误
 							uni.showToast({
 								title: res.detail,
@@ -187,7 +195,6 @@
 							})
 							uni.setStorageSync('mobile', res.mobile)
 							uni.setStorageSync('sessionId', res.sessionId)
-
 							if (res.mouleId == '7') {
 								uni.setStorageSync('appRole', '2');
 								if (this.loginTypeValue == '0') {
@@ -195,6 +202,7 @@
 										url: '../serviceCompany/mineCreateService/mineCreateService',
 									})
 								} else {
+									console.log('this.loginTypeValue', this.loginTypeValue)
 									uni.switchTab({
 										url: '/pages/customerPage/customerPage',
 									})
@@ -231,13 +239,13 @@
 							}
 
 							if (res.mouleId == '2') { // 甲方领导
-								wx.setStorageSync('appRole', '4')
+								uni.setStorageSync('appRole', '4')
 								if (this.loginTypeValue == '0') {
-									wx.redirectTo({
+									uni.redirectTo({
 										url: '../customerService/customerCreateService/customerCreateService',
 									})
 								} else {
-									wx.switchTab({
+									uni.switchTab({
 										url: '/pages/customerPage/customerPage',
 									})
 								}
@@ -245,13 +253,13 @@
 							}
 
 							if (res.mouleId == '6') { // 乙方领导
-								wx.setStorageSync('appRole', '5')
+								uni.setStorageSync('appRole', '5')
 								if (this.loginTypeValue == '0') {
-									wx.redirectTo({
+									uni.redirectTo({
 										url: '../serviceCompany/mineCreateService/mineCreateService',
 									})
 								} else {
-									wx.switchTab({
+									uni.switchTab({
 										url: '/pages/customerPage/customerPage',
 									})
 								}
@@ -259,14 +267,14 @@
 							}
 
 							if (res.mouleId == '13') {
-								wx.setStorageSync('appRole', '3')
+								uni.setStorageSync('appRole', '3')
 								if (this.loginTypeValue == '0') {
-									//wx.setStorageSync('LoginType', '0');
-									wx.redirectTo({
+									//uni.setStorageSync('LoginType', '0');
+									uni.redirectTo({
 										url: '../serviceTable/createService/createService',
 									})
 								} else {
-									wx.switchTab({
+									uni.switchTab({
 										url: '/pages/customerPage/customerPage',
 									})
 								}

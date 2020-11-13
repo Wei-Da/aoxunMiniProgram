@@ -52,7 +52,7 @@
 		onLoad(options) {
 			this.faultId = options.faultId;
 			uni.getSystemInfo({
-				success: function(res) {
+				success: (res) => {
 					this.imageWidth = res.windowWidth / 6 - 10
 				}
 			});
@@ -73,6 +73,9 @@
 						}
 						this.imageInfo = res.listFaultImage;
 						this.uploadPatrolimgs = temOriginal;
+					},
+					onError: (err) => {
+						console.log(err)
 					}
 				})
 			},
@@ -115,6 +118,7 @@
 				})
 				uni.uploadFile({
 					url: this.$websiteUrl + serviceCode["SAVE_CHECK_IMAGE"],
+					fileType: 'image',
 					filePath: this.uploadPatrolimgs.length == 0 ? '' : this.uploadPatrolimgs[i],
 					name: 'attachment',
 					formData: {
@@ -165,10 +169,12 @@
 				}
 				this.uploadImageAndData(0, this.uploadPatrolimgs.length);
 			},
+
 			deleteImage: function(index) {
 				const images = this.uploadPatrolimgs;
 				this.removeImage(images[index], index);
 			},
+
 			removeImage(imagePath, index) {
 				let param = {
 					"faultReportId": ''

@@ -14,7 +14,15 @@
     "pages/oldVersionFileDetail/oldVersionFileDetail",
     "pages/serviceSign/serviceSign",
     "pages/addServiceRecord/addServiceRecord",
-    "pages/checkReport/checkReport"
+    "pages/checkReport/checkReport",
+    "pages/serviceClose/serviceClose",
+    "pages/serviceDescribe/serviceDescribe",
+    "pages/patrolContentHistory/patrolContentHistory",
+    "pages/patrolPageDetail/patrolPageDetail",
+    "pages/personalInfo/personalInfo",
+    "pages/modifyPwd/modifyPwd",
+    "pages/modifyLoginName/modifyLoginName",
+    "pages/versionsPage/versionsPage"
   ],
   "subPackages": [],
   "window": {

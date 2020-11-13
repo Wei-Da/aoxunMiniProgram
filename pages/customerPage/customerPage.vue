@@ -116,7 +116,6 @@
 			getIndexMenUrl(item) {
 				let itemPackage = item.package;
 				let itemUrl = item.url;
-				console.log(`${itemPackage}/${itemUrl}`)
 				switch(itemUrl) {
 					// serviceCompany 目录下
 					// 我要保修
@@ -200,7 +199,7 @@
 					url: serviceCode["GET_DYNAMIC_MENU"],
 					method: "POST",
 					data: {
-						"rid": wx.getStorageSync('userInfo').appRole
+						"rid": uni.getStorageSync('userInfo').appRole
 					},
 					success: (res) => {
 						let temMenu = [];

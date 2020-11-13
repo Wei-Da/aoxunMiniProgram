@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"uview-ui/components/u-search/u-search":1,"uview-ui/components/u-action-sheet/u-action-sheet":1,"uview-ui/components/u-toast/u-toast":1,"uview-ui/components/u-icon/u-icon":1,"uview-ui/components/u-popup/u-popup":1,"uview-ui/components/u-mask/u-mask":1};
+/******/ 		var cssChunks = {"uview-ui/components/u-modal/u-modal":1,"uview-ui/components/u-search/u-search":1,"uview-ui/components/u-action-sheet/u-action-sheet":1,"uview-ui/components/u-toast/u-toast":1,"uview-ui/components/u-loading/u-loading":1,"uview-ui/components/u-popup/u-popup":1,"uview-ui/components/u-icon/u-icon":1,"uview-ui/components/u-mask/u-mask":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"uview-ui/components/u-search/u-search":"uview-ui/components/u-search/u-search","uview-ui/components/u-action-sheet/u-action-sheet":"uview-ui/components/u-action-sheet/u-action-sheet","uview-ui/components/u-toast/u-toast":"uview-ui/components/u-toast/u-toast","uview-ui/components/u-icon/u-icon":"uview-ui/components/u-icon/u-icon","uview-ui/components/u-popup/u-popup":"uview-ui/components/u-popup/u-popup","uview-ui/components/u-mask/u-mask":"uview-ui/components/u-mask/u-mask"}[chunkId]||chunkId) + ".acss";
+/******/ 				var href = "" + ({"uview-ui/components/u-modal/u-modal":"uview-ui/components/u-modal/u-modal","uview-ui/components/u-search/u-search":"uview-ui/components/u-search/u-search","uview-ui/components/u-action-sheet/u-action-sheet":"uview-ui/components/u-action-sheet/u-action-sheet","uview-ui/components/u-toast/u-toast":"uview-ui/components/u-toast/u-toast","uview-ui/components/u-loading/u-loading":"uview-ui/components/u-loading/u-loading","uview-ui/components/u-popup/u-popup":"uview-ui/components/u-popup/u-popup","uview-ui/components/u-icon/u-icon":"uview-ui/components/u-icon/u-icon","uview-ui/components/u-mask/u-mask":"uview-ui/components/u-mask/u-mask"}[chunkId]||chunkId) + ".acss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

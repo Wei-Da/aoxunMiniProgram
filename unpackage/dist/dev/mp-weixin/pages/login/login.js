@@ -220,7 +220,8 @@ var _index = _interopRequireDefault(__webpack_require__(/*! @/apis/index.js */ 4
 //
 //
 var _default = { data: function data() {return { loginTypeValue: '1', usernameValue: '', passwordValue: '', serialValue: '', checkboxItems: [{ value: 'usernameValue', name: '记住用户名', isChecked: false }, { value: 'passwordValue', name: '记住密码', isChecked: false }], radioItems: [{ value: 'quickWarrantyLogin', name: '快速保修登录', isChecked: false }, { value: 'regularLogin', name: '正常登录', isChecked: true }] };}, onLoad: function onLoad() {// 获取用户名, 密码和公司编号
-    var username = uni.getStorageSync('usernameValue');var password = uni.getStorageSync('passwordValue');var serial = uni.getStorageSync('serial');if (username) {this.usernameValue = username;this.checkboxItems[0].isChecked = true;}if (password) {this.passwordValue = password;this.checkboxItems[1].isChecked = true;}serial ? this.serialValue = serial : this.serialValue = '';
+    var username = uni.getStorageSync('usernameValue');var password = uni.getStorageSync('passwordValue');var serial = uni.getStorageSync('serial');if (username) {this.usernameValue = username;this.checkboxItems[0].isChecked = true;}if (password) {this.passwordValue = password;this.checkboxItems[1].isChecked = true;}
+    serial ? this.serialValue = serial : this.serialValue = '';
 
     var provider = '';
     var weixinCode = '';
@@ -248,6 +249,7 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
   },
   methods: {
     bindLogin: function bindLogin(e) {var _this = this;
+      console.log('登录');
       var username = e.detail.value.usernameValue;
       var password = e.detail.value.passwordValue;
       var serial = e.detail.value.serialValue;
@@ -299,6 +301,7 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
           weixinCode: weixinCode },
 
         success: function success(res) {
+          console.log('LOGIN', res);
           if (res.resultcode === '1' || res.resultcode === 1) {// 用户名或密码错误
             uni.showToast({
               title: res.detail,
@@ -319,7 +322,6 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
 
             uni.setStorageSync('mobile', res.mobile);
             uni.setStorageSync('sessionId', res.sessionId);
-
             if (res.mouleId == '7') {
               uni.setStorageSync('appRole', '2');
               if (_this.loginTypeValue == '0') {
@@ -327,6 +329,7 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
                   url: '../serviceCompany/mineCreateService/mineCreateService' });
 
               } else {
+                console.log('this.loginTypeValue', _this.loginTypeValue);
                 uni.switchTab({
                   url: '/pages/customerPage/customerPage' });
 
@@ -363,13 +366,13 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
             }
 
             if (res.mouleId == '2') {// 甲方领导
-              wx.setStorageSync('appRole', '4');
+              uni.setStorageSync('appRole', '4');
               if (_this.loginTypeValue == '0') {
-                wx.redirectTo({
+                uni.redirectTo({
                   url: '../customerService/customerCreateService/customerCreateService' });
 
               } else {
-                wx.switchTab({
+                uni.switchTab({
                   url: '/pages/customerPage/customerPage' });
 
               }
@@ -377,13 +380,13 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
             }
 
             if (res.mouleId == '6') {// 乙方领导
-              wx.setStorageSync('appRole', '5');
+              uni.setStorageSync('appRole', '5');
               if (_this.loginTypeValue == '0') {
-                wx.redirectTo({
+                uni.redirectTo({
                   url: '../serviceCompany/mineCreateService/mineCreateService' });
 
               } else {
-                wx.switchTab({
+                uni.switchTab({
                   url: '/pages/customerPage/customerPage' });
 
               }
@@ -391,14 +394,14 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
             }
 
             if (res.mouleId == '13') {
-              wx.setStorageSync('appRole', '3');
+              uni.setStorageSync('appRole', '3');
               if (_this.loginTypeValue == '0') {
-                //wx.setStorageSync('LoginType', '0');
-                wx.redirectTo({
+                //uni.setStorageSync('LoginType', '0');
+                uni.redirectTo({
                   url: '../serviceTable/createService/createService' });
 
               } else {
-                wx.switchTab({
+                uni.switchTab({
                   url: '/pages/customerPage/customerPage' });
 
               }

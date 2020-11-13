@@ -1,0 +1,1 @@
+<view class="describe_group"><textarea class="describe_textarea" placeholder="请输入描述" maxlength="100" data-event-opts="{{[['input',[['bindInputValue',['$event']]]],['confirm',[['bindConfirmValue',['$event']]]]]}}" value="{{serviceContent}}" bindinput="__e" bindconfirm="__e"></textarea><text class="describe_number">{{fontNum+"/100"}}</text></view>

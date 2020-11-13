@@ -43,7 +43,7 @@ export const request = (param) => {
 		header: header,
 		data: data,
 		success: res => {
-			if(!res.data) {
+			if (!res.data) {
 				param.onError()
 				return;
 			}

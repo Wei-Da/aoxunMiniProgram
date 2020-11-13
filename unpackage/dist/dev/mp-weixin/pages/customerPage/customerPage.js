@@ -313,7 +313,7 @@ var _index = _interopRequireDefault(__webpack_require__(/*! @/apis/index.js */ 4
 //
 //
 //
-var _default = { data: function data() {return { swiper: [{ imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_01.png' }, { imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_02.png' }, { imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_03.png' }], appRole: '', waitAllocationAccount: '', waitChangeAccount: '', waitEvaluateAccount: '', todayAddAccount: '', dealingAccount: '', myserviceAccount: '', waitConfirmAccount: '', waitServiceAccount: '', indexmenu: [] };}, onShow: function onShow() {this.appRole = uni.getStorageSync('appRole');this.getServiceAccount(this.appRole);this.getDynamicMenu();}, methods: { getMenuImg: function getMenuImg(imgUrl) {var url = imgUrl.split('./../..');return '../../static' + url[1];}, getIndexMenUrl: function getIndexMenUrl(item) {var itemPackage = item.package;var itemUrl = item.url;console.log("".concat(itemPackage, "/").concat(itemUrl));switch (itemUrl) {// serviceCompany 目录下
+var _default = { data: function data() {return { swiper: [{ imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_01.png' }, { imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_02.png' }, { imageUrl: 'https://www.njbhhelp.com/biHuiImage/njbh_image_03.png' }], appRole: '', waitAllocationAccount: '', waitChangeAccount: '', waitEvaluateAccount: '', todayAddAccount: '', dealingAccount: '', myserviceAccount: '', waitConfirmAccount: '', waitServiceAccount: '', indexmenu: [] };}, onShow: function onShow() {this.appRole = uni.getStorageSync('appRole');this.getServiceAccount(this.appRole);this.getDynamicMenu();}, methods: { getMenuImg: function getMenuImg(imgUrl) {var url = imgUrl.split('./../..');return '../../static' + url[1];}, getIndexMenUrl: function getIndexMenUrl(item) {var itemPackage = item.package;var itemUrl = item.url;switch (itemUrl) {// serviceCompany 目录下
         // 我要保修
         case 'mineCreateService':return '';break; // 我的服务
         case 'myService':return "../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=personid&type=10&title=".concat(item.text);break; // 历史记录
@@ -321,8 +321,7 @@ var _default = { data: function data() {return { swiper: [{ imageUrl: 'https://w
         case 'libSearch':return '../searchPage/searchPage';break;case 'companyRecord':return "../../components/serviceList/serviceList?url=HISTORY_RECORD&faultInfo=original&title=".concat(item.text);break;case 'serviceTodayAdd':return "../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=personid&type=1&title=".concat(item.text);break; // customerService 目录下
         case 'customerCompanyRecord':return "../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=companyid&type=5&title=".concat(item.text);break;case 'customerDealingService':return "../../components/serviceList/serviceList?url=SERVICE_DEALING&faultInfo=sysuserid&type=1&title=".concat(item.text);break;case 'customerServiceClose':return "../../components/serviceList/serviceList?url=SERVICE_CLOSE_QUERY&faultInfo=sysuserid&title=".concat(item.text);break;case 'customerTodayAdd':return "../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=sysuserid&title=".concat(item.text);break;case 'customerWaitAllocation':return "../../components/serviceList/serviceList?url=TABLE_QUERY_SERVICE&faultInfo=sysuserid&title=".concat(item.text);break;case 'faultRecord':return "../../components/serviceList/serviceList?url=ENGINEER_HISTORY_RECORD&faultInfo=sysuserid&title=".concat(item.text);break;case 'repairRecord':return "../../components/serviceList/serviceList?url=HISTORY_RECORD&faultInfo=personid&title=".concat(item.text);break; // 待确认
         case 'waitConfirm':return "../../components/serviceList/serviceList?url=WAIT_CONFIRM&faultInfo=personid&title=".concat(item.text);break; // 待服务
-        case 'waitService':return "../../components/serviceList/serviceList?url=GET_WAIT_SERVICE&faultInfo=personid&title=".concat(item.text);
-          break;
+        case 'waitService':return "../../components/serviceList/serviceList?url=GET_WAIT_SERVICE&faultInfo=personid&title=".concat(item.text);break;
         // serviceTable 目录下
         case 'serviceChange':
           return "../../components/serviceList/serviceList?url=WAIT_SERVICE_CHANGE&changeInfo=true&title=".concat(item.text);
@@ -352,7 +351,7 @@ var _default = { data: function data() {return { swiper: [{ imageUrl: 'https://w
         url: _index.default["GET_DYNAMIC_MENU"],
         method: "POST",
         data: {
-          "rid": wx.getStorageSync('userInfo').appRole },
+          "rid": uni.getStorageSync('userInfo').appRole },
 
         success: function success(res) {
           var temMenu = [];

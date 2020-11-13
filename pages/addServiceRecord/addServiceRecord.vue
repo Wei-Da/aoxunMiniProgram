@@ -187,11 +187,11 @@
 						'sessionId': uni.getStorageSync("sessionId")
 					},
 					success: (res) => {
-						console.log('成功')
+						console.log('图片成功提交')
 						console.log(res)
 					},
 					fail: (res) => {
-						console.log('失败');
+						console.log('图片提交失败');
 						console.log(res);
 					},
 

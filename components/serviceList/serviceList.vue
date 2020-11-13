@@ -105,8 +105,7 @@
 					data: formData,
 					success: (res) => {
 						this.serviceList = this.serviceList.concat(res.info)
-						this.page++
-						console.log("serviceList", this.serviceList)
+						this.page++;
 					}
 				})
 			},
@@ -116,8 +115,6 @@
 				})
 			},
 			getUrl(item) {
-				console.log("item.faultStatus", item.faultStatus)
-				console.log("item.version", item.version)
 				if(item.faultStatus == '5' || item.faultStatus == '6') {
 					return `../../pages/waitServiceDetail/waitServiceDetail?item=${encodeURIComponent(JSON.stringify(item))}`
 				} else if(item.faultStatus == '3') {

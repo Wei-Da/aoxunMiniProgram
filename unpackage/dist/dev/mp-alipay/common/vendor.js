@@ -11694,13 +11694,13 @@ var request = function request(param) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(wx) {var serviceCode = {
+/* WEBPACK VAR INJECTION */(function(uni) {var serviceCode = {
   LOGIN: 'androidLogin.adr', //登录接口
   TABLE_QUERY_SERVICE: 'findFaultInfoFromSelfByAndroid.adr', //服务台查询服务
   GET_SERVICE_DETAIL: 'findHandleProcessingDetailsByAndroid.adr', //获取服务详情
   QUERY_IMAGE_URL: 'findImageUrlByFaultIdByAndroid.adr', //图片地址查询
-  IMAGE_URL: 'getImageByImageName.adr?routerCompany=' + wx.getStorageSync('serial') + '&imageName=', //图片加载
-  CHECK_IMAGE_URL: 'getImageByImagePath.adr?routerCompany=' + wx.getStorageSync('serial') + '&imageName=', //图片加载
+  IMAGE_URL: 'getImageByImageName.adr?routerCompany=' + uni.getStorageSync('serial') + '&imageName=', //图片加载
+  CHECK_IMAGE_URL: 'getImageByImagePath.adr?routerCompany=' + uni.getStorageSync('serial') + '&imageName=', //图片加载
   ADD_FAULT_INFO: '',
   QUERY_COMPANY_NAME: 'getCompany.adr', //服务台服务公司名获取
   QUERY_COMPANY_DEPARTMENT: 'getDept.adr', //服务公司获取部门
@@ -11861,7 +11861,13 @@ module.exports = serviceCode;
 /* 126 */,
 /* 127 */,
 /* 128 */,
-/* 129 */
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */
 /*!************************************************************!*\
   !*** D:/projects/uni-app/aoxunMiniProgram/libs/amap-wx.js ***!
   \************************************************************/

@@ -3,8 +3,8 @@ const serviceCode = {
 	TABLE_QUERY_SERVICE: 'findFaultInfoFromSelfByAndroid.adr',//服务台查询服务
 	GET_SERVICE_DETAIL:'findHandleProcessingDetailsByAndroid.adr',//获取服务详情
 	QUERY_IMAGE_URL: 'findImageUrlByFaultIdByAndroid.adr',//图片地址查询
-	IMAGE_URL: 'getImageByImageName.adr?routerCompany=' + wx.getStorageSync('serial')+'&imageName=',//图片加载
-	CHECK_IMAGE_URL: 'getImageByImagePath.adr?routerCompany=' + wx.getStorageSync('serial') + '&imageName=',//图片加载
+	IMAGE_URL: 'getImageByImageName.adr?routerCompany=' + uni.getStorageSync('serial')+'&imageName=',//图片加载
+	CHECK_IMAGE_URL: 'getImageByImagePath.adr?routerCompany=' + uni.getStorageSync('serial') + '&imageName=',//图片加载
 	ADD_FAULT_INFO:'', 
 	QUERY_COMPANY_NAME:'getCompany.adr',//服务台服务公司名获取
 	QUERY_COMPANY_DEPARTMENT:'getDept.adr',//服务公司获取部门
