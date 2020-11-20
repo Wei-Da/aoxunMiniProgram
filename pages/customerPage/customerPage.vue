@@ -71,10 +71,10 @@
 				<image :src="getMenuImg(item.icon)" class="index-menu-item-img" mode="aspectFit"></image>
 				<text class="index-menu-item-text">{{ item.text }}</text>
 			</navigator>
-			<navigator class="index-menu-item">
+<!-- 			<navigator class="index-menu-item" url="../testPage/testPage">
 				<image src="../../static/images/menu18.png" class="index-menu-item-img" mode="aspectFit"></image>
 				<text class="index-menu-item-text">在线咨询</text>
-			</navigator>
+			</navigator> -->
 		</view>
 	</view>
 </template>
@@ -114,13 +114,14 @@
 				return '../../static' + url[1]
 			},
 			getIndexMenUrl(item) {
+				console.log('item: ', item)
 				let itemPackage = item.package;
 				let itemUrl = item.url;
 				switch(itemUrl) {
 					// serviceCompany 目录下
 					// 我要保修
 					case 'mineCreateService':
-						return ''
+						return `../mineCreateService/mineCreateService`
 					break;
 					// 我的服务
 					case 'myService':

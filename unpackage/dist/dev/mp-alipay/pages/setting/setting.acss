@@ -58,4 +58,8 @@
 .modal-text {
 	text-align: center;
 }
+.btn-block {
+	position: fixed;
+	bottom: 0;
+}
 

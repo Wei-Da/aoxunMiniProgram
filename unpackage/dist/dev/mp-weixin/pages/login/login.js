@@ -92,7 +92,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  uToast: function() {
+    return __webpack_require__.e(/*! import() | uview-ui/components/u-toast/u-toast */ "uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-toast/u-toast.vue */ 269))
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -131,6 +135,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
 
 
 
@@ -219,12 +230,14 @@ var _index = _interopRequireDefault(__webpack_require__(/*! @/apis/index.js */ 4
 //
 //
 //
-var _default = { data: function data() {return { loginTypeValue: '1', usernameValue: '', passwordValue: '', serialValue: '', checkboxItems: [{ value: 'usernameValue', name: '记住用户名', isChecked: false }, { value: 'passwordValue', name: '记住密码', isChecked: false }], radioItems: [{ value: 'quickWarrantyLogin', name: '快速保修登录', isChecked: false }, { value: 'regularLogin', name: '正常登录', isChecked: true }] };}, onLoad: function onLoad() {// 获取用户名, 密码和公司编号
-    var username = uni.getStorageSync('usernameValue');var password = uni.getStorageSync('passwordValue');var serial = uni.getStorageSync('serial');if (username) {this.usernameValue = username;this.checkboxItems[0].isChecked = true;}if (password) {this.passwordValue = password;this.checkboxItems[1].isChecked = true;}
-    serial ? this.serialValue = serial : this.serialValue = '';
-
-    var provider = '';
-    var weixinCode = '';
+//
+//
+//
+//
+//
+//
+var app = getApp();var _default = { data: function data() {return { loginTypeValue: '1', usernameValue: '', passwordValue: '', serialValue: '', checkboxItems: [{ value: 'usernameValue', name: '记住用户名', isChecked: false }, { value: 'passwordValue', name: '记住密码', isChecked: false }], radioItems: [{ value: 'quickWarrantyLogin', name: '快速保修登录', isChecked: false }, { value: 'regularLogin', name: '正常登录', isChecked: true }] };}, onLoad: function onLoad() {console.log('login页面onLoad');uni.setStorageSync("userInfo", ""); // 获取用户名, 密码和公司编号
+    var username = uni.getStorageSync('usernameValue');var password = uni.getStorageSync('passwordValue');var serial = uni.getStorageSync('serial');if (username) {this.usernameValue = username;this.checkboxItems[0].isChecked = true;}if (password) {this.passwordValue = password;this.checkboxItems[1].isChecked = true;}serial ? this.serialValue = serial : this.serialValue = '';var provider = '';var weixinCode = '';
     uni.getProvider({
       service: "oauth",
       success: function success(res) {
@@ -249,32 +262,33 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
   },
   methods: {
     bindLogin: function bindLogin(e) {var _this = this;
-      console.log('登录');
+      console.log('登录', e);
       var username = e.detail.value.usernameValue;
       var password = e.detail.value.passwordValue;
       var serial = e.detail.value.serialValue;
+      this.dealFormIds(e.detail.formId);
 
       // 用户信息效验
       var regular = "^[ ]+$";
       var rule = new RegExp(regular);
       if (username === "" || rule.test(username)) {
-        uni.showToast({
-          title: "用户名不能为空",
-          icon: "none" });
+        this.$refs.uToast.show({
+          title: '用户名不能为空',
+          type: 'error' });
 
         return;
       }
       if (password === "" || rule.test(password)) {
-        uni.showToast({
-          title: "密码不能为空",
-          icon: "none" });
+        this.$refs.uToast.show({
+          title: '密码不能为空',
+          type: 'error' });
 
         return;
       }
       if (serial === "" || rule.test(serial)) {
-        uni.showToast({
-          title: "公司编号不能为空",
-          icon: "none" });
+        this.$refs.uToast.show({
+          title: '公司编号不能为空',
+          type: 'error' });
 
         return;
       }
@@ -290,6 +304,9 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
         uni.setStorageSync('passwordValue', password);
       }
 
+      _index.default["IMAGE_URL"] = 'getImageByImageName.adr?routerCompany=' + serial + '&imageName=';
+      _index.default["CHECK_IMAGE_URL"] = 'getImageByImagePath.adr?routerCompany=' + serial + '&imageName=';
+
       var weixinCode = uni.getStorageSync('weixinCode');
 
       this.$request({
@@ -303,9 +320,9 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
         success: function success(res) {
           console.log('LOGIN', res);
           if (res.resultcode === '1' || res.resultcode === 1) {// 用户名或密码错误
-            uni.showToast({
+            _this.$refs.uToast.show({
               title: res.detail,
-              icon: "none" });
+              type: 'error' });
 
             return;
           }
@@ -322,16 +339,24 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
 
             uni.setStorageSync('mobile', res.mobile);
             uni.setStorageSync('sessionId', res.sessionId);
+            console.log('this.loginTypeValue', _this.loginTypeValue);
             if (res.mouleId == '7') {
               uni.setStorageSync('appRole', '2');
               if (_this.loginTypeValue == '0') {
+                console.log('mineCreateService');
                 uni.redirectTo({
-                  url: '../serviceCompany/mineCreateService/mineCreateService' });
+                  url: '/pages/mineCreateService/mineCreateService' });
 
               } else {
-                console.log('this.loginTypeValue', _this.loginTypeValue);
+                console.log('customerPage');
                 uni.switchTab({
-                  url: '/pages/customerPage/customerPage' });
+                  url: '/pages/customerPage/customerPage',
+                  success: function success() {
+                    console.log('switchTab成功');
+                  },
+                  fail: function fail(err) {
+                    console.log('switchTab失败');
+                  } });
 
               }
               return;
@@ -341,7 +366,7 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
               uni.setStorageSync('appRole', '3');
               if (_this.loginTypeValue == '0') {
                 uni.redirectTo({
-                  url: '../serviceTable/createService/createService' });
+                  url: '/pages/createService/createService' });
 
               } else {
                 uni.switchTab({
@@ -355,7 +380,7 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
               uni.setStorageSync('appRole', '1');
               if (_this.loginTypeValue == '0') {
                 uni.redirectTo({
-                  url: '../customerService/customerCreateService/customerCreateService' });
+                  url: '/pages/customerCreateService/customerCreateService' });
 
               } else {
                 uni.switchTab({
@@ -369,7 +394,7 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
               uni.setStorageSync('appRole', '4');
               if (_this.loginTypeValue == '0') {
                 uni.redirectTo({
-                  url: '../customerService/customerCreateService/customerCreateService' });
+                  url: '/pages/customerCreateService/customerCreateService' });
 
               } else {
                 uni.switchTab({
@@ -383,7 +408,7 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
               uni.setStorageSync('appRole', '5');
               if (_this.loginTypeValue == '0') {
                 uni.redirectTo({
-                  url: '../serviceCompany/mineCreateService/mineCreateService' });
+                  url: '/pages/mineCreateService/mineCreateService' });
 
               } else {
                 uni.switchTab({
@@ -398,7 +423,7 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
               if (_this.loginTypeValue == '0') {
                 //uni.setStorageSync('LoginType', '0');
                 uni.redirectTo({
-                  url: '../serviceTable/createService/createService' });
+                  url: '/pages/createService/createService' });
 
               } else {
                 uni.switchTab({
@@ -411,9 +436,9 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
         },
         // 返回空
         onError: function onError() {
-          uni.showToast({
-            title: "公司编号错误",
-            icon: "none" });
+          _this.$refs.uToast.show({
+            title: '公司编号错误',
+            type: 'error' });
 
         },
         fail: function fail() {
@@ -439,6 +464,17 @@ var _default = { data: function data() {return { loginTypeValue: '1', usernameVa
       } else {
         this.loginTypeValue = '1';
       }
+    },
+
+    dealFormIds: function dealFormIds(formId) {
+      var formIds = app.globalData.gloabalFomIds; //获取全局数据中的推送码gloabalFomIds数组
+      if (!formIds) formIds = [];
+      var data = {
+        formId: formId,
+        expire: parseInt(new Date().getTime()) + 604800000 //计算7天后的过期时间时间戳
+      };
+      formIds.push(data); //将data添加到数组的末尾
+      app.globalData.gloabalFomIds = formIds; //保存推送码并赋值给全局变量
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

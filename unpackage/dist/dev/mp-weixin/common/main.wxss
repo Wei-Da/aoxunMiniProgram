@@ -3486,13 +3486,6 @@ textarea {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-radio-group radio {
-  position: absolute;
-  left: -999em;
-}
-radio-group label {
-  margin-right: 16rpx;
-}
 .btn-submit {
   padding: 20rpx;
 }

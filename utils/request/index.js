@@ -10,11 +10,8 @@ export const request = (param) => {
 	// 参数 serial(公司编号) 每次请求都要传参
 
 	data["routerCompany"] = uni.getStorageSync('serial') || '';
-	data["sessionId"] = uni.getStorageSync('sessionId') || '';
-
-	//防止重复提交，相同请求间隔时间不能小于500毫秒
-	let nowTime = new Date().getTime();
-
+	data["sessionId"] = uni.getStorageSync('sessionId') || '';	
+	
 	// 请求方式: GET POST 
 	if (method) {
 		method = method.toUpperCase(); // 小写转成大写

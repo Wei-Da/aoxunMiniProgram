@@ -1,5 +1,7 @@
 {
   "defaultTitle": "",
   "pullRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast"
+  }
 }

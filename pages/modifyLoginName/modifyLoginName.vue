@@ -22,6 +22,7 @@
 <script>
 	const app = getApp()
 	import serviceCode from '@/apis/index.js';
+
 	export default {
 		data() {
 			return {
@@ -34,6 +35,7 @@
 		},
 		methods: {
 			modifyLoginName: function(e) {
+				console.log('修改电话')
 				this.dealFormIds(e.detail.formId);
 				let newMobile = e.detail.value.newMobile;
 				if (newMobile == '') {
@@ -50,7 +52,7 @@
 				
 				this.$request({
 					url: serviceCode["MODIFY_MOBILE"],
-					method: 'PSOT',
+					method: 'POST',
 					data: param,
 					success: (res) => {
 						if (res.resultcode == '1') {
@@ -64,6 +66,9 @@
 								type: 'error',
 							})
 						}
+					},
+					onError() {
+						
 					}
 				})
 			},
@@ -71,9 +76,7 @@
 			//定时器提示框3秒消失  
 			ohShitfadeOut() {
 				var fadeOutTimeout = setTimeout(() => {
-					this.setData({
-						popErrorMsg: ''
-					});
+					this.popErrorMsg = '';
 
 				}, 3000);
 			},

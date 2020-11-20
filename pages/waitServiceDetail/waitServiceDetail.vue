@@ -4,7 +4,7 @@
 		<u-toast ref="uToast" />
 
 		<!-- 服务增派的页面弹窗 -->
-		<u-modal :title="服务增派" :show-title="true" :show-cancel-button="true" v-model="transferHidden" :mask-close-able="true" @confirm="modalTransferChange" @cancel="modalTransferCancel">
+		<u-modal title="服务增派" :show-title="true" :show-cancel-button="true" v-model="transferHidden" :mask-close-able="true" @confirm="modalTransferChange" @cancel="modalTransferCancel">
 
 			<view class="input-list slot-content">
 				<view class="input-item">
@@ -30,7 +30,7 @@
 		</u-modal>
 
 		<!-- 服务变更的页面弹窗 -->
-		<u-modal :title="服务变更" :show-title="true" :show-cancel-button="true" v-model="changeHidden" :mask-close-able="true" @confirm="modalServiceChange">
+		<u-modal title="服务变更" :show-title="true" :show-cancel-button="true" v-model="changeHidden" :mask-close-able="true" @confirm="modalServiceChange">
 
 			<view class="input-list slot-contents">
 				<view class="input-item">
@@ -1191,8 +1191,9 @@
 							'&processPerId=' + this.perId + '&faultTitle=' + this.faultInfo.title,
 					})
 				} else {
-					uni.showToast({
-						title: '请先签到'
+					this.$refs.uToast.show({
+						title: '请先签到',
+						type: 'error'
 					})
 				}
 			},

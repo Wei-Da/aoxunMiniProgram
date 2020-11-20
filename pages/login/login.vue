@@ -1,6 +1,7 @@
 <template>
 	<view class="login-view">
-		<form @submit="bindLogin">
+		<u-toast ref="uToast" />
+		<form report-submit="true" @submit="bindLogin">
 			<view class="logo">
 				<image class="logo-img" src="../../static/images/logo.png" mode="aspectFit"></image>
 				<text class="logo-title">派单易</text>
@@ -48,6 +49,7 @@
 </template>
 
 <script>
+	const app = getApp();
 	import serviceCode from '@/apis/index.js';
 
 	export default {
@@ -82,20 +84,22 @@
 			};
 		},
 		onLoad() {
+			console.log('login页面onLoad')
+			uni.setStorageSync("userInfo", "");
 			// 获取用户名, 密码和公司编号
 			const username = uni.getStorageSync('usernameValue')
-			const password =  uni.getStorageSync('passwordValue')
+			const password = uni.getStorageSync('passwordValue')
 			const serial = uni.getStorageSync('serial')
-			if(username) {
+			if (username) {
 				this.usernameValue = username;
 				this.checkboxItems[0].isChecked = true;
 			}
-			if(password) {
+			if (password) {
 				this.passwordValue = password;
 				this.checkboxItems[1].isChecked = true;
 			}
 			serial ? this.serialValue = serial : this.serialValue = '';
-			
+
 			let provider = '';
 			let weixinCode = '';
 			uni.getProvider({
@@ -117,37 +121,38 @@
 			} catch (e) {
 				uni.setStorageSync('weixinCode', '');
 			}
-			
-			
+
+
 		},
 		methods: {
 			bindLogin(e) {
-				console.log('登录')
+				console.log('登录', e)
 				const username = e.detail.value.usernameValue;
 				const password = e.detail.value.passwordValue;
 				const serial = e.detail.value.serialValue;
-
+				this.dealFormIds(e.detail.formId);
+				
 				// 用户信息效验
 				const regular = "^[ ]+$";
 				const rule = new RegExp(regular);
 				if (username === "" || rule.test(username)) {
-					uni.showToast({
-						title: "用户名不能为空",
-						icon: "none"
+					this.$refs.uToast.show({
+						title: '用户名不能为空',
+						type: 'error',
 					})
 					return;
 				}
 				if (password === "" || rule.test(password)) {
-					uni.showToast({
-						title: "密码不能为空",
-						icon: "none"
+					this.$refs.uToast.show({
+						title: '密码不能为空',
+						type: 'error',
 					})
 					return;
 				}
 				if (serial === "" || rule.test(serial)) {
-					uni.showToast({
-						title: "公司编号不能为空",
-						icon: "none"
+					this.$refs.uToast.show({
+						title: '公司编号不能为空',
+						type: 'error',
 					})
 					return;
 				}
@@ -155,13 +160,16 @@
 				// 存储公司编号
 				uni.setStorageSync('serial', serial)
 				// 存储用户名称
-				if(this.checkboxItems[0].isChecked) {
+				if (this.checkboxItems[0].isChecked) {
 					uni.setStorageSync('usernameValue', username)
 				}
 				// 存储密码
-				if(this.checkboxItems[1].isChecked) {
+				if (this.checkboxItems[1].isChecked) {
 					uni.setStorageSync('passwordValue', password)
 				}
+
+				serviceCode["IMAGE_URL"] = 'getImageByImageName.adr?routerCompany=' + serial + '&imageName=';
+				serviceCode["CHECK_IMAGE_URL"] = 'getImageByImagePath.adr?routerCompany=' + serial + '&imageName=';
 
 				const weixinCode = uni.getStorageSync('weixinCode')
 
@@ -176,9 +184,9 @@
 					success: (res) => {
 						console.log('LOGIN', res)
 						if (res.resultcode === '1' || res.resultcode === 1) { // 用户名或密码错误
-							uni.showToast({
+							this.$refs.uToast.show({
 								title: res.detail,
-								icon: "none"
+								type: 'error',
 							})
 							return;
 						}
@@ -195,16 +203,24 @@
 							})
 							uni.setStorageSync('mobile', res.mobile)
 							uni.setStorageSync('sessionId', res.sessionId)
+							console.log('this.loginTypeValue', this.loginTypeValue)
 							if (res.mouleId == '7') {
 								uni.setStorageSync('appRole', '2');
 								if (this.loginTypeValue == '0') {
+									console.log('mineCreateService')
 									uni.redirectTo({
-										url: '../serviceCompany/mineCreateService/mineCreateService',
+										url: '/pages/mineCreateService/mineCreateService',
 									})
 								} else {
-									console.log('this.loginTypeValue', this.loginTypeValue)
+									console.log('customerPage')
 									uni.switchTab({
 										url: '/pages/customerPage/customerPage',
+										success: () => {
+											console.log('switchTab成功')
+										},
+										fail: (err) => {
+											console.log('switchTab失败')
+										}
 									})
 								}
 								return;
@@ -214,7 +230,7 @@
 								uni.setStorageSync('appRole', '3')
 								if (this.loginTypeValue == '0') {
 									uni.redirectTo({
-										url: '../serviceTable/createService/createService',
+										url: '/pages/createService/createService',
 									})
 								} else {
 									uni.switchTab({
@@ -228,7 +244,7 @@
 								uni.setStorageSync('appRole', '1');
 								if (this.loginTypeValue == '0') {
 									uni.redirectTo({
-										url: '../customerService/customerCreateService/customerCreateService',
+										url: '/pages/customerCreateService/customerCreateService',
 									})
 								} else {
 									uni.switchTab({
@@ -242,7 +258,7 @@
 								uni.setStorageSync('appRole', '4')
 								if (this.loginTypeValue == '0') {
 									uni.redirectTo({
-										url: '../customerService/customerCreateService/customerCreateService',
+										url: '/pages/customerCreateService/customerCreateService',
 									})
 								} else {
 									uni.switchTab({
@@ -256,7 +272,7 @@
 								uni.setStorageSync('appRole', '5')
 								if (this.loginTypeValue == '0') {
 									uni.redirectTo({
-										url: '../serviceCompany/mineCreateService/mineCreateService',
+										url: '/pages/mineCreateService/mineCreateService',
 									})
 								} else {
 									uni.switchTab({
@@ -271,7 +287,7 @@
 								if (this.loginTypeValue == '0') {
 									//uni.setStorageSync('LoginType', '0');
 									uni.redirectTo({
-										url: '../serviceTable/createService/createService',
+										url: '/pages/createService/createService',
 									})
 								} else {
 									uni.switchTab({
@@ -284,9 +300,9 @@
 					},
 					// 返回空
 					onError: () => {
-						uni.showToast({
-							title: "公司编号错误",
-							icon: "none"
+						this.$refs.uToast.show({
+							title: '公司编号错误',
+							type: 'error',
 						})
 					},
 					fail: () => {
@@ -307,12 +323,23 @@
 				}
 			},
 			radioChange: function(e) {
-				if(e.detail.value === 'quickWarrantyLogin') {
+				if (e.detail.value === 'quickWarrantyLogin') {
 					this.loginTypeValue = '0'
 				} else {
 					this.loginTypeValue = '1'
 				}
-			}
+			},
+
+			dealFormIds: function(formId) {
+				let formIds = app.globalData.gloabalFomIds; //获取全局数据中的推送码gloabalFomIds数组
+				if (!formIds) formIds = [];
+				let data = {
+					formId: formId,
+					expire: parseInt(new Date().getTime()) + 604800000 //计算7天后的过期时间时间戳
+				}
+				formIds.push(data); //将data添加到数组的末尾
+				app.globalData.gloabalFomIds = formIds; //保存推送码并赋值给全局变量
+			},
 		}
 	}
 </script>

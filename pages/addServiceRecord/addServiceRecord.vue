@@ -1,5 +1,7 @@
 <template>
 	<view>
+		<u-toast ref="uToast" />
+		
 		<view class="container container-gray">
 			<form class='container-body' report-submit='true' @submit='applySubmit'>
 				<view class="group">
@@ -143,15 +145,17 @@
 				let title = e.detail.value.title;
 				let serviceContent = e.detail.value.serviceContent;
 				if (title == '') {
-					uni.showToast({
-						title: '请输入标题'
+					this.$refs.uToast.show({
+						title: '请输入标题',
+						type: 'error'
 					})
 					return;
 				}
 				this.title = title;
 				if (serviceContent == '') {
-					uni.showToast({
-						title: '请填输入服务描述'
+					this.$refs.uToast.show({
+						title: '请填输入服务描述',
+						type: 'error'
 					})
 					return
 				}

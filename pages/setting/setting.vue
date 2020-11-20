@@ -62,12 +62,8 @@
 
 			modalChange: function() {
 				uni.setStorageSync('appRole', '');
-				uni.reLaunch({
-					
-					url: '/pages/login/login',
-					success: function(e) {
-						
-					}
+				uni.redirectTo({
+					url: '/pages/login/login'
 				})
 			},
 
@@ -125,5 +121,10 @@
 	
 	.modal-text {
 		text-align: center;
+	}
+	
+	.btn-block {
+		position: fixed;
+		bottom: 0;
 	}
 </style>

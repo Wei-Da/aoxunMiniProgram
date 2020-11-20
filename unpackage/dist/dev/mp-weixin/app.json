@@ -22,7 +22,13 @@
     "pages/personalInfo/personalInfo",
     "pages/modifyPwd/modifyPwd",
     "pages/modifyLoginName/modifyLoginName",
-    "pages/versionsPage/versionsPage"
+    "pages/versionsPage/versionsPage",
+    "pages/noticeContentTitle/noticeContentTitle",
+    "pages/mineCreateService/mineCreateService",
+    "pages/dateChoose/dateChoose",
+    "pages/createService/createService",
+    "pages/searchCompanyName/searchCompanyName",
+    "pages/customerCreateService/customerCreateService"
   ],
   "subPackages": [],
   "window": {
@@ -70,5 +76,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap41.json"
+  "sitemapLocation": "sitemap95.json"
 }

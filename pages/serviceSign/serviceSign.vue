@@ -1,5 +1,7 @@
 <template>
 	<view>
+		<u-toast ref="uToast" />
+		
 		<map class='map_attr' :latitude='latitude' :longitude='longitude' :markers='markers' />
 		<view class='sign_group'>
 			<input class='sign_item_text' placeholder='请输入签到说明' :value='signExplain' @input='getInputValue' />
@@ -86,8 +88,9 @@
 			},
 			uploadSignData() {
 				if (this.signExplain == '') {
-					uni.showToast({
-						title: '请输入签到说明'
+					this.$refs.uToast.show({
+						title: '请输入签到说明',
+						type: 'error'
 					})
 					return;
 				}

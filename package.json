@@ -30,5 +30,9 @@
   },
   "homepage": "https://github.com/Wei-Da/aoxunMiniProgram#readme",
   "description": "",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.0"
+  }
 }
